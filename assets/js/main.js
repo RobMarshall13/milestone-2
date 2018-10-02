@@ -63,10 +63,10 @@ function initMap() {
                     for (i = 0; i < data['hours'].length; i += 6)
                         console.log(hours[i]);
                         
-                       document.getElementById("waves0").innerHTML = `Wave Height:` + data['hours'][6]['waveHeight'][3]['value'] + 'metres' + ' at 06:00';
-                        document.getElementById("waves1").innerHTML = `Wave Height:` + data['hours'][12]['waveHeight'][3]['value'] + 'metres' + ' at 12:00';
-                        document.getElementById("waves2").innerHTML = `Wave Height:` + data['hours'][18]['waveHeight'][3]['value'] + 'metres' + ' at 18:00';
-                        document.getElementById("waves3").innerHTML = `Wave Height:` + data['hours'][24]['waveHeight'][3]['value'] + 'metres' + ' at 2400';
+                       document.getElementById("sHeight0").innerHTML = data['hours'][6]['waveHeight'][3]['value'];
+                        document.getElementById("sHeight1").innerHTML = data['hours'][12]['waveHeight'][3]['value'];
+                        document.getElementById("sHeight2").innerHTML = data['hours'][18]['waveHeight'][3]['value'];
+                        document.getElementById("sHeight3").innerHTML = data['hours'][24]['waveHeight'][3]['value'];
 
 
 
@@ -81,10 +81,10 @@ function initMap() {
 
 
 
-                        document.getElementById("waves0").innerHTML = `Wave Height:` + data['hours'][clickCount]['waveHeight'][3]['value'] + 'metres' + ' at 06:00';
-                        document.getElementById("waves1").innerHTML = `Wave Height:` + data['hours'][clickCount + 6]['waveHeight'][3]['value'] + 'metres' + ' at 12:00';
-                        document.getElementById("waves2").innerHTML = `Wave Height:` + data['hours'][clickCount + 12]['waveHeight'][3]['value'] + 'metres' + ' at 18:00';
-                        document.getElementById("waves3").innerHTML = `Wave Height:` + data['hours'][clickCount + 18]['waveHeight'][3]['value'] + 'metres' + ' at 2400';
+                        document.getElementById("sHeight0").innerHTML =  data['hours'][clickCount]['waveHeight'][3]['value'];
+                        document.getElementById("sHeight1").innerHTML = data['hours'][clickCount + 6]['waveHeight'][3]['value'];
+                        document.getElementById("sHeight2").innerHTML = data['hours'][clickCount + 12]['waveHeight'][3]['value'];
+                        document.getElementById("sHeight3").innerHTML = data['hours'][clickCount + 18]['waveHeight'][3]['value'];
 
 
 
