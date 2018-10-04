@@ -8,6 +8,10 @@
 	
 
 	<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+		
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" type="text/css" />
 	<style>
 	
 	</style>
@@ -24,16 +28,19 @@
 	
 		<div id="air"></div>
 		
-		<table>
+		<table id="tideTable" class="table table-bordered table-striped" >
       <tr>
         <th>Time</th>
-        <th>Air Temperature</th>
-        <th>Swell Height</th>
+        <th>Swell Direction</th>
+         <th>Swell Height</th>
         <th>Swell Period</th>
-        <th>Wind Speed</th>
         <th>Wind Direction</th>
+        <th>Wind Speed</th>
+        <th>Water Temperature</th>
+        <th>Air Temperature</th>
+        <th>Visibility</th>
       </tr>
-      <tr>
+     <!-- <tr>
         <td>06:00</td>
         <td id="airTemp0"></td>
         <td id="sHeight0"></td>
@@ -65,19 +72,19 @@
       	<td id="sPeriod3"></td>
       	<td id="wSpeed3"></td>
       	<td id="wDir3"></td>
-      </tr>
+      </tr>-->
       
     </table>
-	
+		<button id="next6hours">next 6 hours</button>
 	
 		 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
 </div>
 	<div id="map-canvas"></div>
-		<button id="next6hours">next 6 hours</button>
+	
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>	
+		
+	
 		
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-DY78LezWel2j9I6OXAevS7qaAsXYQG0&region=uklibraries=places&callback=initMap"></script>
 		<script type="text/javascript" src="assets/js/main.js"></script>	
