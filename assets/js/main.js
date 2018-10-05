@@ -86,7 +86,7 @@ function initMap() {
                     
                     }
                    
-                   $('#tideTable').empty();
+                   $('#tideTable td').parent().empty();
                    
                     $('#tideTable').append(htmlString);
                   
