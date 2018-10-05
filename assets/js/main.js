@@ -54,8 +54,8 @@ function initMap() {
                 fetch(`https://api.stormglass.io/point?lat=${locations[i][1]}&lng=${locations[i][2]}&params=${params}&source=noaa`, {
                     headers: {
                         //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                         //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                         'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+                         'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                         //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                     }
                     
                 }).then(function(response) {
@@ -66,7 +66,7 @@ function initMap() {
                     htmlString = '';
                     
                      hours = data['hours'];
-                    for (i = 0; i < data['hours'].length; i+=24) {
+                    for (i = 0; i < data['hours'].length; i+=6) {
                         console.log(hours[i]);
                    const get = (p, o) =>
                     p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
@@ -85,6 +85,8 @@ function initMap() {
                          htmlString += '</tr>';
                     
                     }
+                   
+                   $('#tideTable').empty();
                    
                     $('#tideTable').append(htmlString);
                   
@@ -108,5 +110,4 @@ function initMap() {
 
 
 initMap();
-
 
