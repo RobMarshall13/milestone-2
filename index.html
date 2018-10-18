@@ -2,81 +2,88 @@
 <html>
 
 <head>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<meta charset="utf-8">
 	<title>milestone-2</title>
-	
+
 
 	<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
-  	<script src='https://s3.amazonaws.com/rapidapi-prod-fe_static/rapidapi.min.js'></script>
-  	 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-		
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	
+	<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
 
 
 	<style>
-	
 	</style>
 </head>
 
 <body>
 
-	
+
 	<div class="navbar">
 		<h2 class="title">SURF, SUP & SAIL</h2>
+	</div>
+	<div id="landing" >
+		<div class="svg">
+		<img src="/assets/images/man-holding-surfboard-silhouette.jpg"  alt="" >
+		<img src="/assets/images/stand-up-paddleboard-silhouette.jpg"  alt="" >
+		<img src="/assets/images/sailboat-silhouette-2.jpg"  alt="" >
 		</div>
-	<div id="landing">
-	<img src="assets/images/surfer-girl.jpg" id="bg" alt="">
-	<button id="enter">Enter</button>
-</div>		
-		
-	
+		<button id="enter" class="bounce">Enter</button>
+	</div>
+
+
 
 	<div id="map-canvas" class="hide">
 		
+
 	</div>
 	<div id="control" class="hide">
-		
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
 		<p>Simply click a marker on the map to get a 5 day forecast on the sea conditions in that area.</p>
 		<p>If its looking good zoom in on the map to get suggestions on places to stay, eat,drink and park.</p>
-	
-	
-		<div id="tideTableHeader" ></div>
-		<table id='tideTable' >
-		<caption ><h2 id="placeName"></h2></caption>  
-      <tr>
-        <th>Time</th>
-        <th>Swell Direction</th>
-         <th>Swell Height</th>
-        <th>Swell Period</th>
-        <th>Wind Direction</th>
-        <th>Wind Speed</th>
-        <th>Water Temperature</th>
-        <th>Air Temperature</th>
-        <th>Visibility</th>
-        <th>Sea Level</th>
-      </tr>
-      </table>
-      
-   
-	
-	 <div id="chartDiv"></div>
-		
 
+
+	<div id="tableContainer">
+		<table id='tideTable'>
+			<caption>
+				<h2 id="placeName"></h2>
+			</caption>
+			<tr>
+				<th>Time</th>
+				<th>Swell Direction</th>
+				<th>Swell Height</th>
+				<th>Swell Period</th>
+				<th>Wind Direction</th>
+				<th>Wind Speed</th>
+				<th>Water Temperature</th>
+				<th>Air Temperature</th>
+				<th>Visibility</th>
+				<th>Sea Level</th>
+			</tr>
+		</table>
 </div>
 
-	
 
-		
-	
-		
+		<div id="chartDiv"></div>
+
+
+	</div>
+
+
+
+
+
+
+
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-DY78LezWel2j9I6OXAevS7qaAsXYQG0&region=uklibraries=places&callback=initMap"></script>
-		<script src='https://s3.amazonaws.com/rapidapi-prod-fe_static/rapidapi.min.js'></script>
-		<script src="https://storage.googleapis.com/code-snippets/rapidapi.min.js"></script>
-		<script type="text/javascript" src="assets/js/main.js"></script>
-		<script>
-			
-		</script>
+	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script>
+	</script>
 </body>
 
 </html>

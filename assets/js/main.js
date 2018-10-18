@@ -1,13 +1,13 @@
 $(document).ready(function() {
-    
-    $("#enter").click(function(){
+
+    $("#enter").click(function() {
         $("#landing").hide("slow");
         $("#map-canvas").removeClass("hide");
-         $("#control").removeClass("hide");
-          initMap();
+        $("#control").removeClass("hide");
+        initMap();
     });
-   
-  
+
+
 
 
     // create locations coordinates offshore close to named town to get marine information for that area.
@@ -24,65 +24,61 @@ $(document).ready(function() {
         ["Porthleven", 50.0754, -5.3375],
         ["Lizard", 49.951, -5.206],
         ["Falmouth", 50.137, -5.030],
-        ["Portloe", 50,2167, -4.8878],
-        ["St Austell", 50.3277,- 4.724],
+        ["Portloe", 50, 2167, -4.8878],
+        ["St Austell", 50.3277, -4.724],
         ["Looe", 50.3485, -4.4281],
-        ["Lynton",51.2380, -3.8401],
+        ["Lynton", 51.2380, -3.8401],
         ["Minehead", 51.2153, -3.4661]
     ];
 
     //set parameters for api information we need
     const params = 'swellHeight,swellDirection,swellPeriod,windDirection,windSpeed,waterTemperature,airTemperature,visibility,seaLevel';
-    
-
-
-
-    const get = (p, o) =>
-        p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
 
     var hours;
     var htmlString;
+
+
 
     //initiate map
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map-canvas'), {
             zoom: 8,
             center: { lat: 50.738, lng: -4.002 },
-             mapTypeId: 'hybrid'
+            mapTypeId: 'hybrid'
 
         });
 
         // Info Window initialize
         var infoWindow = new google.maps.InfoWindow(),
-            marker, i;
+            flag, i;
 
 
         // marker icon
         var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-         
+
 
         //set markers on map
         for (i = 0; i < locations.length; i++) {
-            marker = new google.maps.Marker({
+            flag = new google.maps.Marker({
                 position: { lat: locations[i][1], lng: locations[i][2] },
                 map: map,
-                 animation: google.maps.Animation.DROP,
+                animation: google.maps.Animation.DROP,
                 title: locations[i][0],
                 icon: image
             });
 
 
             // gets relevant api data when offshore marker is clicked
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            google.maps.event.addListener(flag, 'click', (function(flag, i) {
                 return function() {
                     fetch(`https://api.stormglass.io/point?lat=${locations[i][1]}&lng=${locations[i][2]}&params=${params}`, {
                         headers: {
                             //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                            //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                            'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+                            'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                            //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                         }
-                        
-                      
+
+
 
 
                     }).then(function(response) {
@@ -93,83 +89,90 @@ $(document).ready(function() {
                         console.log(hours);
 
                         document.getElementById("placeName").textContent = locations[i][0];
-                        $("#placeName").addClass("shadow");  
-                        /*function next24hours() {
-                          
-                            document.getElementById("next24hours").innerHTML="Next 24 Hours";
-                           
-                            var clickCount= 0;
-                            clickCount += 24;
-                            if (clickCount != 24) {
-                                clickCount = clickCount - 24;
-                            }
-                            else if (clickCount==24){
-                                clickCount = 24;
-                                
-                            }else{
-                                
-                            }*/
-
-                            for (i = 0; i < 120; i += 6) {
-                                console.log(hours[i]);
-
-                                var timeStamp = hours[i].time.slice(0, 16);
+                        $("#placeName").addClass("shadow");
 
 
+                        for (i = 0; i < 120; i += 6) {
 
-                                htmlString += '<tr>';
-                                htmlString += '<td>' + timeStamp + '</td>';
-                                htmlString += '<td>' + (get(['swellDirection', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['swellHeight', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['swellPeriod', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['windDirection', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['windSpeed', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['waterTemperature', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['airTemperature', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '<td>' + (get(['visibility', 0, 'value'], hours[i])) + '</td>';
-                                 htmlString += '<td>' + (get(['seaLevel', 0, 'value'], hours[i])) + '</td>';
-                                htmlString += '</tr>';
-                                
-                                                     
-                            //   var seriesObj = { values:[(get(['swellHeight', 0, 'value'], hours[i]))]
-                            //     };
-                            //     var chartData = {
-                            //       type: 'bar',  // Specify your chart type here.
-                            //       title: {
-                            //         text: 'Swell Height' // Adds a title to your chart
-                            //       },
-                            //       legend: {}, // Creates an interactive legend
-                            //       series:[seriesObj]
-                            //     };
-                            //     zingchart.render({ // Render Method[3]
-                            //       id: 'chartDiv',
-                            //       data: chartData,
-                            //       height: 400,
-                            //       width: 600
-                            //     });
-                                                        }
-                           
-                            
+                            console.log(hours[i]);
+                            var DateStamp = new Date(hours[i].time);
+                            var timeStamp = new Date(hours[i].time);
+                            var convertedDate = DateStamp.toLocaleDateString();
+                            var convertedTime = timeStamp.toLocaleTimeString();
 
-                             $('#tideTable td').parent().empty();
-                         
-                           $('#tideTable').append(htmlString);
-                               $('tr:nth-child(odd)').addClass('odd');
-   
-                            
-                       
-                          
-                    } );
+                            var swellDirection = hours[i].swellDirection[2].value;
+                            var swellHeight = hours[i].swellHeight[2].value;
+                            var visibility = hours[i]['visibility'][0].value;
+                            var waterTemperature = hours[i].waterTemperature[2].value;
+                            var windDirection = hours[i].windDirection[2].value;
+                            var windSpeed = hours[i].windSpeed[2].value;
+                            var airTemperature = hours[i].airTemperature[2].value;
+                            var swellPeriod = hours[i].swellPeriod[2].value;
+                            var seaLevel = hours[i].seaLevel[0].value;
+
+
+                            htmlString += '<tr>';
+                            htmlString += '<td>' + convertedDate + '<br></br>' + convertedTime + '</td>';
+                            htmlString += '<td>' + swellDirection + '</td>';
+                            htmlString += '<td>' + swellHeight + '</td>';
+                            htmlString += '<td>' + swellPeriod + '</td>';
+                            htmlString += '<td>' + windDirection + '</td>';
+                            htmlString += '<td>' + windSpeed + '</td>';
+                            htmlString += '<td>' + waterTemperature + '</td>';
+                            htmlString += '<td>' + airTemperature + '</td>';
+                            htmlString += '<td>' + visibility + '</td>';
+                            htmlString += '<td>' + seaLevel + '</td>';
+                            htmlString += '</tr>';
+                        }
+
+
+
+                        $('#tideTable td').parent().remove();
+                        $('#tideTable').append(htmlString);
+                        $('tr:nth-child(odd)').addClass('odd');
+
+                    });
                     infoWindow.setContent(locations[i][0]);
-                    infoWindow.open(map, marker);
+                    infoWindow.open(map, flag);
                 };
-            })(marker, i));
-
-
+            })(flag, i));
         }
+      
+    //   var bodmin = {lat:50.4683, lng: -4.715114};
+      
+    //     infowindow = new google.maps.InfoWindow();
+    //     var service = new google.maps.places.PlacesService(map);
+    //     service.nearbySearch({
+    //       location:bodmin ,
+    //       radius: 10000,
+    //       type: ['store']
+    //     }, callback);
+      
 
+    //   function callback(results, status) {
+    //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+    //       for (var i = 0; i < results.length; i++) {
+    //         createMarker(results[i]);
+    //       }
+    //     }
+    //   }
 
+    //   function createMarker(place) {
+    //     var placeLoc = place.geometry.location;
+    //     var marker = new google.maps.Marker({
+    //       map: map,
+    //       position: place.geometry.location
+    //     });
 
-    }
-   
+    //     google.maps.event.addListener(marker, 'click', function() {
+    //       infowindow.setContent(place.name);
+    //       infowindow.open(map, this);
+    //     });
+    //   }
+ 
+    
+ }
+    initMap();
+ 
+ 
 });
