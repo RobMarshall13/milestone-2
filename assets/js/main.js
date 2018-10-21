@@ -4,6 +4,8 @@ $(document).ready(function() {
         $("#landing").hide("slow");
         $("#map-canvas").removeClass("hide");
         $("#control").removeClass("hide");
+        $(".navbar").removeClass("hide")
+       
         initMap();
     });
 
@@ -36,7 +38,7 @@ $(document).ready(function() {
 
     var hours;
     var htmlString;
-
+   
 
 
     //initiate map
@@ -73,8 +75,8 @@ $(document).ready(function() {
                 return function() {
                     fetch(`https://api.stormglass.io/point?lat=${locations[i][1]}&lng=${locations[i][2]}&params=${params}`, {
                         headers: {
-                            //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                            'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                            'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+                            //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
                             //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                         }
 
@@ -90,8 +92,10 @@ $(document).ready(function() {
 
                         document.getElementById("placeName").textContent = locations[i][0];
                         $("#placeName").addClass("shadow");
-
-
+                        
+                        var swellDirections = {};
+                        var windDirections = {};
+                        
                         for (i = 0; i < 120; i += 6) {
 
                             console.log(hours[i]);
@@ -99,8 +103,13 @@ $(document).ready(function() {
                             var timeStamp = new Date(hours[i].time);
                             var convertedDate = DateStamp.toLocaleDateString();
                             var convertedTime = timeStamp.toLocaleTimeString();
-
+                         
+                          
+                             
+                             
+                            
                             var swellDirection = hours[i].swellDirection[2].value;
+                            
                             var swellHeight = hours[i].swellHeight[2].value;
                             var visibility = hours[i]['visibility'][0].value;
                             var waterTemperature = hours[i].waterTemperature[2].value;
@@ -109,67 +118,77 @@ $(document).ready(function() {
                             var airTemperature = hours[i].airTemperature[2].value;
                             var swellPeriod = hours[i].swellPeriod[2].value;
                             var seaLevel = hours[i].seaLevel[0].value;
-
+                            
+                            var imgId = "arrImage" + i.toString();
+                            swellDirections[imgId] = swellDirection;
+                            
+                             var imgIdwind = "windArrImage" + i.toString();
+                            windDirections[imgIdwind] = windDirection;
+                            
+                          
+                           
 
                             htmlString += '<tr>';
                             htmlString += '<td>' + convertedDate + '<br></br>' + convertedTime + '</td>';
-                            htmlString += '<td>' + swellDirection + '</td>';
+                            htmlString += '<td>' + '<img src="/assets/images/if_Forward-64_32079.1.png"'+' id="' + imgId + '">' + '</td>';
                             htmlString += '<td>' + swellHeight + '</td>';
                             htmlString += '<td>' + swellPeriod + '</td>';
-                            htmlString += '<td>' + windDirection + '</td>';
+                            htmlString += '<td>' + '<img src="/assets/images/if_Forward-64_32079.1.png"'+' id="' + imgIdwind + '">' + '</td>';
                             htmlString += '<td>' + windSpeed + '</td>';
                             htmlString += '<td>' + waterTemperature + '</td>';
                             htmlString += '<td>' + airTemperature + '</td>';
                             htmlString += '<td>' + visibility + '</td>';
                             htmlString += '<td>' + seaLevel + '</td>';
                             htmlString += '</tr>';
+                            
+                            
+                          
+                            
                         }
 
 
-
+ 
+                              
+                         
                         $('#tideTable td').parent().remove();
                         $('#tideTable').append(htmlString);
                         $('tr:nth-child(odd)').addClass('odd');
+                        
+                        for(var image in swellDirections) {
+                            $("#" + image).css({
+                              '-webkit-transform' : 'rotate(' + swellDirections[image] + 'deg)',
+                              '-moz-transform'    : 'rotate(' + swellDirections[image] + 'deg)',
+                              '-ms-transform'     : 'rotate(' + swellDirections[image] + 'deg)',
+                              '-o-transform'      : 'rotate(' + swellDirections[image] + 'deg)',
+                              'transform'         : 'rotate(' + swellDirections[image] + 'deg)'
+                            });
+                        }
+                        
+                        for(var image in windDirections) {
+                            $("#" + image).css({
+                               
+                              '-webkit-transform' : 'rotate(' + windDirections[image] + 'deg)',
+                              '-moz-transform'    : 'rotate(' + windDirections[image] + 'deg)',
+                              '-ms-transform'     : 'rotate(' + windDirections[image] + 'deg)',
+                              '-o-transform'      : 'rotate(' + windDirections[image] + 'deg)',
+                              'transform'         : 'rotate(' + windDirections[image] + 'deg)'
+                            });
+                        }
 
                     });
                     infoWindow.setContent(locations[i][0]);
                     infoWindow.open(map, flag);
                 };
+                
+                
+                
+              
+               
+                
             })(flag, i));
         }
       
-    //   var bodmin = {lat:50.4683, lng: -4.715114};
-      
-    //     infowindow = new google.maps.InfoWindow();
-    //     var service = new google.maps.places.PlacesService(map);
-    //     service.nearbySearch({
-    //       location:bodmin ,
-    //       radius: 10000,
-    //       type: ['store']
-    //     }, callback);
-      
-
-    //   function callback(results, status) {
-    //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-    //       for (var i = 0; i < results.length; i++) {
-    //         createMarker(results[i]);
-    //       }
-    //     }
-    //   }
-
-    //   function createMarker(place) {
-    //     var placeLoc = place.geometry.location;
-    //     var marker = new google.maps.Marker({
-    //       map: map,
-    //       position: place.geometry.location
-    //     });
-
-    //     google.maps.event.addListener(marker, 'click', function() {
-    //       infowindow.setContent(place.name);
-    //       infowindow.open(map, this);
-    //     });
-    //   }
- 
+   
     
  }
     initMap();
