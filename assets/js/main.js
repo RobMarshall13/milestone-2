@@ -130,10 +130,10 @@ $(document).ready(function() {
 
                             htmlString += '<tr>';
                             htmlString += '<td>' + convertedDate + '<br></br>' + convertedTime + '</td>';
-                            htmlString += '<td>' + '<img src="/assets/images/if_Forward-64_32079.1.png"'+' id="' + imgId + '">' + '</td>';
+                            htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"'+' id="' + imgId + '">' + '</td>';
                             htmlString += '<td>' + swellHeight + '</td>';
                             htmlString += '<td>' + swellPeriod + '</td>';
-                            htmlString += '<td>' + '<img src="/assets/images/if_Forward-64_32079.1.png"'+' id="' + imgIdwind + '">' + '</td>';
+                            htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"'+' id="' + imgIdwind + '">' + '</td>';
                             htmlString += '<td>' + windSpeed + '</td>';
                             htmlString += '<td>' + waterTemperature + '</td>';
                             htmlString += '<td>' + airTemperature + '</td>';

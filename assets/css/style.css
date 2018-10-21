@@ -36,10 +36,7 @@
 
 }
 
-#arrImage0{
-    transition-timing-function: ease-in-out;
-    transition-duration: 500;
-}
+
 
 .title {
 
@@ -57,7 +54,7 @@
 
 
 #landing {
-    background: url("/assets/images/big wave.jpg") no-repeat center center fixed;
+    background: url("assets/images/big wave.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -79,7 +76,7 @@
 }
 
 button {
-    background-image: url("/assets/images/if_Arrow_30_2104129.png");
+    background-image: url("assets/images/if_Arrow_30_2104129.png");
     background-size: cover;
     background-color: transparent;
     -webkit-animation: bounce 1.25s infinite;
