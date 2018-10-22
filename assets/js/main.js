@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+     // landing scene
     $("#enter").click(function() {
         $("#landing").hide("slow");
         $("#map-canvas").removeClass("hide");
@@ -8,8 +8,7 @@ $(document).ready(function() {
        
         initMap();
     });
-
-
+  
 
 
     // create locations coordinates offshore close to named town to get marine information for that area.
@@ -38,7 +37,23 @@ $(document).ready(function() {
 
     var hours;
     var htmlString;
-   
+   // function for adding dynamically positioned images
+    $.fn.animateRotate = function(angle, duration, easing, complete) {
+                               return this.each(function() {
+                                   var $elem = $(this);
+
+                                   $({ deg: 0 }).animate({ deg: angle }, {
+                                       duration: duration,
+                                       easing: easing,
+                                       step: function(now) {
+                                           $elem.css({
+                                               transform: 'rotate(' + now + 'deg)'
+                                           });
+                                       },
+                                       complete: complete || $.noop
+                                   });
+                               });
+                           };
 
 
     //initiate map
@@ -75,13 +90,10 @@ $(document).ready(function() {
                 return function() {
                     fetch(`https://api.stormglass.io/point?lat=${locations[i][1]}&lng=${locations[i][2]}&params=${params}`, {
                         headers: {
-                            'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+                           // 'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
                             //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                            //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+                            'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                         }
-
-
-
 
                     }).then(function(response) {
                         return response.json();
@@ -89,27 +101,22 @@ $(document).ready(function() {
                         htmlString = '';
                         hours = data.hours;
                         console.log(hours);
-
-                        document.getElementById("placeName").textContent = locations[i][0];
+                        // creates the title for the table dynamically
+                        document.getElementById("placeName").textContent = locations[i][0];// set anchor tag
                         $("#placeName").addClass("shadow");
                         
                         var swellDirections = {};
                         var windDirections = {};
-                        
+                        //loop for iterating through the data and returning every 6th hour
                         for (i = 0; i < 120; i += 6) {
 
                             console.log(hours[i]);
+                            // create variables to select specific data for use later on
                             var DateStamp = new Date(hours[i].time);
                             var timeStamp = new Date(hours[i].time);
                             var convertedDate = DateStamp.toLocaleDateString();
                             var convertedTime = timeStamp.toLocaleTimeString();
-                         
-                          
-                             
-                             
-                            
                             var swellDirection = hours[i].swellDirection[2].value;
-                            
                             var swellHeight = hours[i].swellHeight[2].value;
                             var visibility = hours[i]['visibility'][0].value;
                             var waterTemperature = hours[i].waterTemperature[2].value;
@@ -119,64 +126,54 @@ $(document).ready(function() {
                             var swellPeriod = hours[i].swellPeriod[2].value;
                             var seaLevel = hours[i].seaLevel[0].value;
                             
+                            // create id's for dynamically inserted image objects to allow each one to have its own style created from data values.
                             var imgId = "arrImage" + i.toString();
                             swellDirections[imgId] = swellDirection;
                             
                              var imgIdwind = "windArrImage" + i.toString();
                             windDirections[imgIdwind] = windDirection;
-                            
-                          
-                           
-
-                            htmlString += '<tr>';
+                     
+                     
+                            // build the table from the retrieved data
+                            htmlString += '<tr  class="animatedParent" data-sequence="1000">';
                             htmlString += '<td>' + convertedDate + '<br></br>' + convertedTime + '</td>';
-                            htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"'+' id="' + imgId + '">' + '</td>';
+                            htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"'+' id="' + imgId + '"><p>'+swellDirection+'</p>' + '</td>';
                             htmlString += '<td>' + swellHeight + '</td>';
                             htmlString += '<td>' + swellPeriod + '</td>';
-                            htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"'+' id="' + imgIdwind + '">' + '</td>';
+                            htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"'+' id="' + imgIdwind + '"><p>'+windDirection+'</p>' + '</td>';
                             htmlString += '<td>' + windSpeed + '</td>';
                             htmlString += '<td>' + waterTemperature + '</td>';
                             htmlString += '<td>' + airTemperature + '</td>';
                             htmlString += '<td>' + visibility + '</td>';
                             htmlString += '<td>' + seaLevel + '</td>';
                             htmlString += '</tr>';
-                            
-                            
-                          
-                            
+        
                         }
 
-
- 
-                              
-                         
-                        $('#tideTable td').parent().remove();
-                        $('#tideTable').append(htmlString);
-                        $('tr:nth-child(odd)').addClass('odd');
+                        $('#tideTable td').parent().remove();// clear table for next set of data
+                        $('#tideTable').append(htmlString);// add data to table
+                        $('tr:nth-child(odd)').addClass('odd');// shade all odd tr's
                         
+                        // add styles and ux to the table using dynamically created id's
                         for(var image in swellDirections) {
-                            $("#" + image).css({
-                              '-webkit-transform' : 'rotate(' + swellDirections[image] + 'deg)',
-                              '-moz-transform'    : 'rotate(' + swellDirections[image] + 'deg)',
-                              '-ms-transform'     : 'rotate(' + swellDirections[image] + 'deg)',
-                              '-o-transform'      : 'rotate(' + swellDirections[image] + 'deg)',
-                              'transform'         : 'rotate(' + swellDirections[image] + 'deg)'
+                           $("#" + image).animateRotate(360 + swellDirections[image], 1000);
+                            $("td p").hide();
+                            $("#" + image).hover(function(){
+                               $(this).siblings("p").slideToggle(500);
                             });
-                        }
+                          }
                         
                         for(var image in windDirections) {
-                            $("#" + image).css({
-                               
-                              '-webkit-transform' : 'rotate(' + windDirections[image] + 'deg)',
-                              '-moz-transform'    : 'rotate(' + windDirections[image] + 'deg)',
-                              '-ms-transform'     : 'rotate(' + windDirections[image] + 'deg)',
-                              '-o-transform'      : 'rotate(' + windDirections[image] + 'deg)',
-                              'transform'         : 'rotate(' + windDirections[image] + 'deg)'
+                            $("#" + image).animateRotate(360+windDirections[image], 1000);
+                             $("#" + image).hover(function(){
+                               $(this).siblings("p").slideToggle(500);
                             });
                         }
+                       
+                      
 
                     });
-                    infoWindow.setContent(locations[i][0]);
+                    infoWindow.setContent(locations[i][0])
                     infoWindow.open(map, flag);
                 };
                 
@@ -191,7 +188,7 @@ $(document).ready(function() {
    
     
  }
-    initMap();
+    
  
  
 });
