@@ -1,15 +1,16 @@
 $(document).ready(function() {
-     // landing scene
+
     $("#enter").click(function() {
         $("#landing").hide("slow");
         $("#map-canvas").removeClass("hide");
+        $("#map-speech")
         $("#control").removeClass("hide");
         $(".navbar").removeClass("hide")
        
         initMap();
     });
   
-
+    
 
     // create locations coordinates offshore close to named town to get marine information for that area.
     var locations = [
@@ -25,7 +26,7 @@ $(document).ready(function() {
         ["Porthleven", 50.0754, -5.3375],
         ["Lizard", 49.951, -5.206],
         ["Falmouth", 50.137, -5.030],
-        ["Portloe", 50, 2167, -4.8878],
+        ["Portloe", 50.2167, -4.8878],
         ["St Austell", 50.3277, -4.724],
         ["Looe", 50.3485, -4.4281],
         ["Lynton", 51.2380, -3.8401],
@@ -90,9 +91,9 @@ $(document).ready(function() {
                 return function() {
                     fetch(`https://api.stormglass.io/point?lat=${locations[i][1]}&lng=${locations[i][2]}&params=${params}`, {
                         headers: {
-                           // 'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+                            'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
                             //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                            'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+                            //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                         }
 
                     }).then(function(response) {
@@ -101,11 +102,15 @@ $(document).ready(function() {
                         htmlString = '';
                         hours = data.hours;
                         console.log(hours);
-                        // creates the title for the table dynamically
-                        document.getElementById("placeName").textContent = locations[i][0];// set anchor tag
+
+                        document.getElementById("placeName").textContent = locations[i][0];
                         $("#placeName").addClass("shadow");
                         
-                        var swellDirections = {};
+                        
+                         const get = (p, o) =>
+                        p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
+                        
+                          var swellDirections = {};
                         var windDirections = {};
                         //loop for iterating through the data and returning every 6th hour
                         for (i = 0; i < 120; i += 6) {
@@ -114,17 +119,18 @@ $(document).ready(function() {
                             // create variables to select specific data for use later on
                             var DateStamp = new Date(hours[i].time);
                             var timeStamp = new Date(hours[i].time);
-                            var convertedDate = DateStamp.toLocaleDateString();
+                               var convertedDate = DateStamp.toLocaleDateString();
                             var convertedTime = timeStamp.toLocaleTimeString();
-                            var swellDirection = hours[i].swellDirection[2].value;
-                            var swellHeight = hours[i].swellHeight[2].value;
+                            var swellDirection = (get([ 'swellDirection', 0, 'value'],hours[i]));
+                            var swellHeight =(get([ 'swellHeight', 0, 'value'],hours[i]));
+                            
                             var visibility = hours[i]['visibility'][0].value;
-                            var waterTemperature = hours[i].waterTemperature[2].value;
-                            var windDirection = hours[i].windDirection[2].value;
-                            var windSpeed = hours[i].windSpeed[2].value;
-                            var airTemperature = hours[i].airTemperature[2].value;
-                            var swellPeriod = hours[i].swellPeriod[2].value;
-                            var seaLevel = hours[i].seaLevel[0].value;
+                            var waterTemperature =(get([ 'waterTemperature', 0, 'value'],hours[i]));
+                            var windDirection = (get([ 'windDirection', 0, 'value'],hours[i]));
+                            var windSpeed =(get([ 'windSpeed', 0, 'value'],hours[i]));
+                            var airTemperature =(get([ 'airTemperature', 0, 'value'],hours[i]));
+                            var swellPeriod =(get([ 'swellPeriod', 0, 'value'],hours[i]));
+                            var seaLevel = (get([ 'seaLevel', 0, 'value'],hours[i]));
                             
                             // create id's for dynamically inserted image objects to allow each one to have its own style created from data values.
                             var imgId = "arrImage" + i.toString();
@@ -132,7 +138,7 @@ $(document).ready(function() {
                             
                              var imgIdwind = "windArrImage" + i.toString();
                             windDirections[imgIdwind] = windDirection;
-                     
+                            
                      
                             // build the table from the retrieved data
                             htmlString += '<tr  class="animatedParent" data-sequence="1000">';
@@ -147,33 +153,44 @@ $(document).ready(function() {
                             htmlString += '<td>' + visibility + '</td>';
                             htmlString += '<td>' + seaLevel + '</td>';
                             htmlString += '</tr>';
-        
+  
                         }
+                        
+                   
+  
+ 
 
                         $('#tideTable td').parent().remove();// clear table for next set of data
                         $('#tideTable').append(htmlString);// add data to table
-                        $('tr:nth-child(odd)').addClass('odd');// shade all odd tr's
+                        $('tr:nth-child(odd)').addClass('odd');
+                         $("#speech").addClass("hide");
+                          $("#speech1").removeClass("hide");
+                           $("p").removeClass("hide");
                         
-                        // add styles and ux to the table using dynamically created id's
+                             
                         for(var image in swellDirections) {
+                            
                            $("#" + image).animateRotate(360 + swellDirections[image], 1000);
                             $("td p").hide();
-                            $("#" + image).hover(function(){
+                            $("#" + image).click(function(){
                                $(this).siblings("p").slideToggle(500);
+                               
+                               
                             });
-                          }
+                        }
                         
                         for(var image in windDirections) {
                             $("#" + image).animateRotate(360+windDirections[image], 1000);
-                             $("#" + image).hover(function(){
+                             $("#" + image).click(function(){
                                $(this).siblings("p").slideToggle(500);
+                               
                             });
                         }
                        
                       
 
                     });
-                    infoWindow.setContent(locations[i][0])
+                    infoWindow.setContent(locations[i][0]);
                     infoWindow.open(map, flag);
                 };
                 
@@ -185,10 +202,15 @@ $(document).ready(function() {
             })(flag, i));
         }
       
-   
-    
+  
+
  }
-    
+ 
+ 
+ 
+
+ 
+    initMap();
  
  
 });
