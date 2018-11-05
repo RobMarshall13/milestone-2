@@ -8,6 +8,15 @@
 
 }
 
+td img {
+     -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter:         drop-shadow(5px 5px 5px #222); 
+}
+
+svg{
+     -webkit-filter: drop-shadow(5px 5px 5px #000);
+    filter:         drop-shadow(5px 5px 5px #000);   
+}
 
 
 
@@ -30,6 +39,7 @@
     -webkit-box-shadow: 10px 3px 5px 6px #ccc;
     box-shadow: 10px 3px 5px 6px #ccc;
     margin-bottom: 4rem;
+    margin-left: -8px;
     text-align: center;
     font-family: 'Amatic SC', cursive;
     font-size: 20px;
@@ -65,7 +75,7 @@
 
 
 #enter {
-    /*z-index: 3;*/
+   
     position: absolute;
     margin-left: -100px;
     left: 50%;
@@ -116,8 +126,8 @@ button {
 
 body {
     height: 100%;
+    width: 100%;
     font-family: "Open Sans", sans-serif;
-    /* font-family: 'Libre Baskerville', serif; */
     color: black;
     font-size: 15px;
     background-color: white;
@@ -146,9 +156,34 @@ body {
 
 
 #chartDiv {
-    width: 100%;
-    height: 12rem;
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+     overflow-x: auto;
+     overflow-y: hidden;
+      background-color: lightblue;
+        -moz-box-shadow: 10px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
+    box-shadow: 10px 3px 5px 6px #ccc;
+     border: 1px solid black;
 }
+#chartDiv2 {
+    width: 90%;
+    height: 13rem;
+    margin-left: 5%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+     overflow-x: auto;
+     overflow-y: hidden;
+      background-color: lightblue;
+        -moz-box-shadow: 10px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
+    box-shadow: 10px 3px 5px 6px #ccc;
+     border: 1px solid black;
+}
+
 
 
 #tideTable {
@@ -158,7 +193,6 @@ body {
     border: 1px solid black;
     border-collapse: separate;
     text-align: center;
-
     caption-side: top;
     -moz-box-shadow: 10px 3px 5px 6px #ccc;
     -webkit-box-shadow: 10px 3px 5px 6px #ccc;
@@ -213,7 +247,8 @@ p {
     p {
         margin-bottom: 15px;
         line-height: 20px;
-        max-width: 80% text-align:center;
+        max-width: 80% ;
+        text-align:center;
     }
 
     #map-canvas {
@@ -230,6 +265,61 @@ p {
         padding-top: 30px;
 
     }
+    
+    #speech{
+         position: absolute;
+         top: 20rem;
+         left:8rem;
+          max-width: 300px;
+          max-height: 150px;
+          background-color: #fff;
+          border: 8px solid #666;
+          -webkit-border-radius: 30px;
+          -moz-border-radius: 30px;
+          border-radius: 30px;
+          -webkit-box-shadow: 10px 3px 5px 6px #ccc;
+          -moz-box-shadow: 10px 3px 5px 6px #ccc;
+          box-shadow:10px 3px 5px 6px #ccc;
+       
+    }
+    
+    #speech p{
+        position:relative;
+         line-height: 25px;
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+          font-size: large;
+    }
+    
+     #speech1{
+         position: relative;
+          max-width: 90vw;
+          max-height: 150px;
+          margin-left: 5%;
+          margin-right: 5%;
+         margin-top: 20px;
+          /*line-height: 100px;*/
+          background-color: #fff;
+          border: 8px solid #666;
+          -webkit-border-radius: 30px;
+          -moz-border-radius: 30px;
+          border-radius: 30px;
+          -webkit-box-shadow:10px 3px 5px 6px #ccc;
+          -moz-box-shadow: 10px 3px 5px 6px #ccc;
+          box-shadow: 10px 3px 5px 6px #ccc;
+         
+    }
+    
+    #speech1 p{
+        position:relative;
+         line-height: 25px;
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+          font-size: large;
+    }
+    
 
 
 
@@ -258,3 +348,9 @@ p {
         font-size: 5rem;
     }
 }
+
+svg{
+    fill:none;
+    stroke: blue;
+}
+

@@ -9,10 +9,11 @@
 	<title>milestone-2</title>
 
 
-<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 
+ <link rel="stylesheet" href="/assets/css/dc.min.css" type="text/css" />
+<link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 
 
 	<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
@@ -40,21 +41,23 @@
 	
 
 	<div id="map-canvas" class="hide">
-		
+	
 
 	</div>
 	<div id="control" class="hide">
         <!--<input id="pac-input" class="controls" type="text" placeholder="Search Box">-->
-
-		<p>Simply click a marker on the map to get a 5 day forecast on the sea conditions in that area.</p>
-		<p>If its looking good zoom in on the map to get suggestions on places to stay, eat,drink and park.</p>
+	<div id="speech"><p>Click a marker to get marine and weather data for that area.</p><button class="speechbtn"></button></div>
+	<div id="speech1" class="hide"><p class="hide">Click an arrow to see the direction as a value in degrees.</p><button class="speechbtn"></button></div>
+	
 
 
 	<div id="tableContainer">
 		<table id='tideTable'>
 			<caption>
 				<h2 id="placeName"></h2>
+				<a target="_blank" class="hide" id="wikilink">wiki</a>
 			</caption>
+				<div id="chartDiv" class="hide"></div>
 			<tr>
 				<th>Time</th>
 				<th>Swell Direction</th>
@@ -71,7 +74,7 @@
 </div>
 
 
-		<div id="chartDiv"></div>
+
 
 
 	</div>
@@ -80,12 +83,16 @@
 
 
 
-
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+ <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
+    <!--<script type="text/javascript" src="assets/js/crossfilter.min.js"></script>-->
+    <!--<script type="text/javascript" src="assets/js/dc.min.js"></script>-->
+    <!--<script type="text/javascript" src="assets/js/queue.min.js"></script>-->
 
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-DY78LezWel2j9I6OXAevS7qaAsXYQG0&region=uklibraries=places&callback=initMap"></script>
 	
-
-	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script type="text/javascript" src="/assets/js/main.js"></script>
+	<script type="text/javascript" src="/assets/js/graph.js"></script>
 	<script>
 	</script>
 </body>
