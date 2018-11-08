@@ -85,7 +85,7 @@ svg{
 
 }
 
-button {
+.arrow {
     background-image: url("image/if_Arrow_30_2104129.png");
     background-size: cover;
     background-color: transparent;
@@ -116,28 +116,11 @@ button {
     display: none;
 }
 
-#main {
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-
-}
 
 
-body {
-    height: 100%;
-    width: 100%;
-    font-family: "Open Sans", sans-serif;
-    color: black;
-    font-size: 15px;
-    background-color: white;
-}
 
-#description {
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-}
+
+
 
 #infowindow-content .title {
     font-weight: bold;
@@ -152,14 +135,33 @@ body {
 }
 
 
+#container{
+    width:100vw;
+    display:flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    align-content:center;
+}
 
+  #map-canvas {
+
+        min-height: 50vh;
+        width: 90%;
+        margin-top: 8rem;
+        -moz-box-shadow: 10px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 10px 3px 5px 6px #ccc;
+        box-shadow: 10px 3px 5px 6px #ccc;
+        border: 2px solid black;
+        padding-top: 30px;
+
+    }
+    
 
 
 #chartDiv {
     width: 90%;
     height: auto;
-    margin-left: 5%;
-    margin-top: 50px;
+    
     margin-bottom: 30px;
      overflow-x: auto;
      overflow-y: hidden;
@@ -168,27 +170,28 @@ body {
     -webkit-box-shadow: 10px 3px 5px 6px #ccc;
     box-shadow: 10px 3px 5px 6px #ccc;
      border: 1px solid black;
+   
 }
-#chartDiv2 {
-    width: 90%;
-    height: 13rem;
-    margin-left: 5%;
-    margin-top: 50px;
-    margin-bottom: 30px;
-     overflow-x: auto;
-     overflow-y: hidden;
-      background-color: lightblue;
-        -moz-box-shadow: 10px 3px 5px 6px #ccc;
-    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-    box-shadow: 10px 3px 5px 6px #ccc;
-     border: 1px solid black;
+
+button,
+#wikilink{
+     background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    display:inline-block;
 }
+
 
 
 
 #tideTable {
 
-    width: 90vw;
+    width: 90%;
     height: 2rem;
     border: 1px solid black;
     border-collapse: separate;
@@ -200,13 +203,6 @@ body {
     padding: 0;
 }
 
-#tableContainer {
-    overflow-x: auto;
-    width: 90vw;
-    padding: 0;
-    margin-left: 5%;
-    margin-right: 5%;
-}
 
 th {
     background: lightblue;
@@ -230,15 +226,15 @@ td {
 }
 
 #placeName {
+    width: 85%;
     background-color: black;
     color: white;
-
-}
-
-p {
-    color: black;
+   
     text-align: center;
+   
+
 }
+
 
 /* tablets and desktop */
 
@@ -253,10 +249,8 @@ p {
 
     #map-canvas {
 
-        min-height: 75vh;
-        width: 90vw;
-        margin-left: 5%;
-        margin-right: 5%;
+        min-height: 50vh;
+        width: 90%;
         margin-top: 8rem;
         -moz-box-shadow: 10px 3px 5px 6px #ccc;
         -webkit-box-shadow: 10px 3px 5px 6px #ccc;
@@ -266,59 +260,7 @@ p {
 
     }
     
-    #speech{
-         position: absolute;
-         top: 20rem;
-         left:8rem;
-          max-width: 300px;
-          max-height: 150px;
-          background-color: #fff;
-          border: 8px solid #666;
-          -webkit-border-radius: 30px;
-          -moz-border-radius: 30px;
-          border-radius: 30px;
-          -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-          -moz-box-shadow: 10px 3px 5px 6px #ccc;
-          box-shadow:10px 3px 5px 6px #ccc;
-       
-    }
-    
-    #speech p{
-        position:relative;
-         line-height: 25px;
-          text-align: center;
-          margin-left: auto;
-          margin-right: auto;
-          font-size: large;
-    }
-    
-     #speech1{
-         position: relative;
-          max-width: 90vw;
-          max-height: 150px;
-          margin-left: 5%;
-          margin-right: 5%;
-         margin-top: 20px;
-          /*line-height: 100px;*/
-          background-color: #fff;
-          border: 8px solid #666;
-          -webkit-border-radius: 30px;
-          -moz-border-radius: 30px;
-          border-radius: 30px;
-          -webkit-box-shadow:10px 3px 5px 6px #ccc;
-          -moz-box-shadow: 10px 3px 5px 6px #ccc;
-          box-shadow: 10px 3px 5px 6px #ccc;
-         
-    }
-    
-    #speech1 p{
-        position:relative;
-         line-height: 25px;
-          text-align: center;
-          margin-left: auto;
-          margin-right: auto;
-          font-size: large;
-    }
+  
     
 
 
@@ -330,7 +272,7 @@ p {
 
 @media only screen and (max-width: 360px) {
     #map-canvas {
-        height: 75vh;
+       min-height: 75vh;
     }
 
     #tideTable {
@@ -354,3 +296,66 @@ svg{
     stroke: blue;
 }
 
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	
+	}
+	
+	#tideTable{
+	    
+    width: 90%;
+    height: 2rem;
+   
+    border-collapse: separate;
+    text-align: center;
+    caption-side: top;
+   
+    padding: 0;
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+		border: none;
+	
+	}
+	
+	/*tr { border: 1px solid #ccc; }*/
+	
+	td { 
+		/* Behave  like a "row" */
+		/*border: none;*/
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	td:nth-of-type(1):before { content: "Time"; }
+	td:nth-of-type(2):before { content: "SwellDirection"; }
+	td:nth-of-type(3):before { content: "swell Height"; }
+	td:nth-of-type(4):before { content: "Swell Period"; }
+	td:nth-of-type(5):before { content: "Wind Direction"; }
+	td:nth-of-type(6):before { content: "Wind Speed"; }
+	td:nth-of-type(7):before { content: "Water Temperature"; }
+	td:nth-of-type(8):before { content: "Air Temperature"; }
+	td:nth-of-type(9):before { content: "Visibility"; }
+	td:nth-of-type(10):before { content: "Sea Level"; }
+}
