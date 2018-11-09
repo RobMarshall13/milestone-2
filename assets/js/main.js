@@ -24,9 +24,35 @@ $(document).ready(function() {
         
     });
     
-    $("#chartButton").click(function(){
+    $("#chart").click(function(){
         $("#chartDiv").slideToggle(500)
     });
+    
+    
+        var locations = [] ; 
+        var boats =  "assets/lifeboatStations.json";
+        var lifeGuards = "assets/life-guarded-beaches.json";
+        var beaches = "/assets/allBeaches.json";
+        
+        
+      
+        
+        
+     
+  async function selection(DataSet, variable){
+     
+    $.ajax({
+     url:DataSet,
+      dataType: "json",
+      success: function(data){
+          for(i = 0; i < data.length; i++){
+              var nextLocation = data[i]
+              locations.push(nextLocation);
+          }
+        }
+      });
+  }
+  
   
      
 
@@ -139,28 +165,44 @@ function initMap() {
 
     });
     
-     var locations = [] ; 
-  
-    $.ajax({
-      url:"assets/sites.json",
-      dataType: "json",
-      success: function(data){
-          for(i = 0; i < data.length; i++){
-              var nextLocation = data[i]
-              locations.push(nextLocation);
-          }
-       
-         
-
-            
+     var image = 'assets/dot_PNG23.png';
     
-
-
+       $("#lifeGuardButton").click(function(){
+           
+               image = "assets/dot_PNG23.png";
+                 selection(lifeGuards);
+               placeMarkers();
+                   console.log(locations);
+         
+        });
+        
+         $("#lifeBoatButton").click(function(){
+            
+               image = "assets/dot_PNG11.png";
+                 selection(boats);
+                 placeMarkers();
+                 console.log(locations);
+        });
+        
+         $("#allBeaches").click(function(){
+           
+              image = "assets/dot_PNG19.png";
+                selection(beaches);
+                    placeMarkers();
+                    console.log(locations);
+        });
+    
+  
+    
+    
+   
+ 
         // Info Window initialize
         var infoWindow = new google.maps.InfoWindow(),
             flag, i;
+       function placeMarkers(){     
         // marker icon
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+       
         //set markers on map
            for( i=0 ; i < locations.length; i++){
                console.log(locations[i]);
@@ -172,6 +214,7 @@ function initMap() {
                     icon: image
                    
                 });
+           
 
 
                 // gets relevant api data when offshore marker is clicked
@@ -291,15 +334,12 @@ function initMap() {
 
 
                           })(flag, i));
-
-           }  
-}
-});
-         
-      } 
+                        }              
+                    }placeMarkers();  
+                }
+          });
     
       
-    }
+    
    
                           
-);
