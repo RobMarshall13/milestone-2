@@ -1,10 +1,32 @@
 $(document).ready(function() {
+    
+    
+        var locations = [] ; 
+        
 
-
-
+ 
+     
+    $.ajax({
+     url:"assets/life-guarded-beaches.json",
+      dataType: "json",
+      success: function(data){
+          for(i = 0; i < data.length; i++){
+              var nextLocation = data[i]
+              locations.push(nextLocation);
+          }
+        }
+      });
   
-  
 
+   var markers = new Array();
+
+    var iconSrc = {};
+    
+     iconSrc['lifeGuard'] = 'http://labs.google.com/ridefinder/images/mm_20_red.png';
+    iconSrc['lifeBoat'] = 'http://labs.google.com/ridefinder/images/mm_20_green.png';
+    iconSrc['allBeaches'] = 'http://labs.google.com/ridefinder/images/mm_20_yellow.png';
+   
+    
 
 
 
@@ -30,28 +52,15 @@ $(document).ready(function() {
     
     
         var locations = [] ; 
-        var boats =  "assets/lifeboatStations.json";
-        var lifeGuards = "assets/life-guarded-beaches.json";
-        var beaches = "/assets/allBeaches.json";
-        
+       
         
       
-        
+       function toFeet(meter) {
+      return meter * 3.28;
+    }  
         
      
-  async function selection(DataSet, variable){
-     
-    $.ajax({
-     url:DataSet,
-      dataType: "json",
-      success: function(data){
-          for(i = 0; i < data.length; i++){
-              var nextLocation = data[i]
-              locations.push(nextLocation);
-          }
-        }
-      });
-  }
+ 
   
   
      
@@ -158,6 +167,7 @@ function makeChart(lat, lon){
  
 //initiate map
 function initMap() {
+    markers = null;
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 5,
         center: { lat: 53.800, lng: -1.5491 },
@@ -165,60 +175,43 @@ function initMap() {
 
     });
     
-     var image = 'assets/dot_PNG23.png';
-    
-       $("#lifeGuardButton").click(function(){
-           
-               image = "assets/dot_PNG23.png";
-                 selection(lifeGuards);
-               placeMarkers();
-                   console.log(locations);
-         
-        });
-        
-         $("#lifeBoatButton").click(function(){
-            
-               image = "assets/dot_PNG11.png";
-                 selection(boats);
-                 placeMarkers();
-                 console.log(locations);
-        });
-        
-         $("#allBeaches").click(function(){
-           
-              image = "assets/dot_PNG19.png";
-                selection(beaches);
-                    placeMarkers();
-                    console.log(locations);
-        });
-    
-  
-    
-    
    
+       
+    
+          
+             var markers = [];
+             var marker, i;
+     
  
         // Info Window initialize
-        var infoWindow = new google.maps.InfoWindow(),
-            flag, i;
-       function placeMarkers(){     
-        // marker icon
-       
-        //set markers on map
-           for( i=0 ; i < locations.length; i++){
+            var infoWindow = new google.maps.InfoWindow();
+            
+                       
+                    
+                            
+               
+          
+          for( i=0 ; i < locations.length; i++){
                console.log(locations[i]);
-                    flag = new google.maps.Marker({
-                    position: { lat: locations[i].lat, lng: locations[i].long },
+                   marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i].lat,locations[i].long ),
                     map: map,
-                    animation: google.maps.Animation.DROP,
                     title: locations[i].label,
-                    icon: image
+                    icon: iconSrc[locations[i][7]]
+                    
                    
                 });
+                markers.push(marker);
+                
+                
+
+                
+        
            
 
 
                 // gets relevant api data when offshore marker is clicked
-                google.maps.event.addListener(flag, 'click', (function(flag, i) {
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function getData() {
                         fetch(`https://api.stormglass.io/point?lat=${locations[i].lat}&lng=${locations[i].long}&params=${params}`, {
                             headers: {
@@ -234,13 +227,14 @@ function initMap() {
                             hours = data.hours;
                             console.log(hours);
                             
+                      
  
                         
                         
                           makeChart(locations[i].lat, locations[i].long);
 
 
-                          document.getElementById("placeName").textContent = locations[i].label;
+                          document.getElementById("placeName").textContent = locations[i].Label;
                           $("#placeName").addClass("shadow");
                           document.getElementById("wikilink").setAttribute('href', "https://en.wikipedia.org/wiki/" + locations[i].label);
 
@@ -259,7 +253,7 @@ function initMap() {
                               var convertedDate = DateStamp.toLocaleDateString();
                               var convertedTime = timeStamp.toLocaleTimeString();
                               var swellDirection = (get(['swellDirection', 0, 'value'], hours[i]));
-                              var swellHeight = (get(['swellHeight', 0, 'value'], hours[i]));
+                              var swellHeight = toFeet((get(['swellHeight', 0, 'value'], hours[i]))).toFixed(2);
 
                               var visibility = hours[i]['visibility'][0].value;
                               var waterTemperature = (get(['waterTemperature', 0, 'value'], hours[i]));
@@ -281,9 +275,9 @@ function initMap() {
 
                               // build the table from the retrieved data
                               htmlString += '<tr  class="animatedParent" data-sequence="1000">';
-                              htmlString += '<td>' + convertedDate + '<br></br>' + convertedTime + '</td>';
+                              htmlString += '<td>' + convertedDate +'\n'+ convertedTime + '</td>';
                               htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgId + '"><p>' + swellDirection + '&deg;' + 'C </p>' + '</td>';
-                              htmlString += '<td>' + swellHeight + ' m </td>';
+                              htmlString += '<td>' + swellHeight + ' Ft. </td>';
                               htmlString += '<td>' + swellPeriod + ' sec</td>';
                               htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgIdwind + '"><p>' + windDirection + '&deg;' + 'C</p>' + '</td>';
                               htmlString += '<td>' + windSpeed + ' mph </td>';
@@ -328,15 +322,60 @@ function initMap() {
 
 
                           });
-                          infoWindow.setContent(locations[i].label);
-                          infoWindow.open(map, flag);
+                          infoWindow.setContent(locations[i].Label);
+                          infoWindow.open(map, marker);
                           };
 
 
-                          })(flag, i));
-                        }              
-                    }placeMarkers();  
-                }
+                          })(marker, i));
+                        
+                         } 
+                         
+                     
+                         
+}
+    
+                                   function show(category) {
+                        for (var i=0; i<locations.length; i++) {
+                          if (locations[i][7] == category) {
+                            markers[i].setVisible(true);
+                          }
+                        }
+                      }
+                          
+                          
+                          function hide(category) {
+                              for (var i = 0; i < locations.length; i++) {
+                                  if (locations[i][7] == category) {
+                                      markers[i].setVisible(false);
+                                  }
+                              }
+                          }
+                          
+                          hide("lifeGuard");
+                          hide("lifeBoat");
+                          hide("allBeaches");
+                          
+
+       
+                    $(".checkbox").click(function(){
+                                    var cat = $(this).attr("value" );                                   
+                                    if ( $(this).prop(":checked"))
+                                    {
+                                        show(cat);
+                                        console.log(cat);
+                                        console.log(markers);
+                                    }
+                                    else
+                                    {
+                                        hide(cat);
+                                        console.log(cat);
+                                    }
+                                  });
+                    
+                    
+                    
+                
           });
     
       
