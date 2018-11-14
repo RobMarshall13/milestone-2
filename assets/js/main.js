@@ -11,20 +11,18 @@ $(document).ready(function() {
       dataType: "json",
       success: function(data){
           for(i = 0; i < data.length; i++){
-              var nextLocation = data[i]
+              var nextLocation = data[i];
               locations.push(nextLocation);
           }
         }
       });
   
 
-   var markers = new Array();
-
-    var iconSrc = {};
+    var markers = new Array();
+            var marker, i;
+            var iconSrc = {};   
     
-     iconSrc['lifeGuard'] = 'http://labs.google.com/ridefinder/images/mm_20_red.png';
-    iconSrc['lifeBoat'] = 'http://labs.google.com/ridefinder/images/mm_20_green.png';
-    iconSrc['allBeaches'] = 'http://labs.google.com/ridefinder/images/mm_20_yellow.png';
+    
    
     
 
@@ -167,41 +165,91 @@ function makeChart(lat, lon){
  
 //initiate map
 function initMap() {
-    markers = null;
+    
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 5,
         center: { lat: 53.800, lng: -1.5491 },
         mapTypeId: 'hybrid'
-
+        
     });
     
+       function setMapOnAll(map) {
+                            for (var i = 0; i < markers.length; i++) {
+                              markers[i].setMap(map);
+                            }
+                          }
+    
+                                   function show(category) {
+                        for (var i=0; i<markers.length; i++) {
+                          if (locations[i][7] == category) {
+                            setMapOnAll(map);
+                          }
+                        }
+                      }
+                          
+                          
+                          function hide(category) {
+                              for (var i = 0; i < markers.length; i++) {
+                                  if (locations[i][7] == category) {
+                                      setMapOnAll(null);
+                                  }
+                              }
+                          }
+                          
+                          hide("lifeGuard");
+                          hide("lifeBoat");
+                          hide("allBeaches");
+                          
+
+       
+                    $(".checkbox").click(function(){
+                                    var cat = $(this).attr("value" );                                   
+                                    if ( $(this).prop("checked", true))
+                                    {
+                                        show(cat);
+                                        console.log(cat);
+                                        console.log(markers);
+                                    }
+                                    else
+                                    {
+                                        hide(cat);
+                                        console.log(cat);
+                                    }
+                                  });
+                    
+                    
    
        
     
           
-             var markers = [];
-             var marker, i;
+            
      
  
         // Info Window initialize
             var infoWindow = new google.maps.InfoWindow();
             
                        
-                    
-                            
+          
+            
+            iconSrc['lifeGuard'] = 'http://labs.google.com/ridefinder/images/mm_20_red.png';
+            iconSrc['lifeBoat'] = 'http://labs.google.com/ridefinder/images/mm_20_green.png';
+            iconSrc['allBeaches'] = 'http://labs.google.com/ridefinder/images/mm_20_yellow.png';
+                                    
                
           
           for( i=0 ; i < locations.length; i++){
                console.log(locations[i]);
                    marker = new google.maps.Marker({
                     position: new google.maps.LatLng(locations[i].lat,locations[i].long ),
-                    map: map,
+                    
                     title: locations[i].label,
                     icon: iconSrc[locations[i][7]]
                     
                    
                 });
+               
                 markers.push(marker);
+                
                 
                 
 
@@ -331,49 +379,11 @@ function initMap() {
                         
                          } 
                          
-                     
-                         
-}
-    
-                                   function show(category) {
-                        for (var i=0; i<locations.length; i++) {
-                          if (locations[i][7] == category) {
-                            markers[i].setVisible(true);
-                          }
                         }
-                      }
-                          
-                          
-                          function hide(category) {
-                              for (var i = 0; i < locations.length; i++) {
-                                  if (locations[i][7] == category) {
-                                      markers[i].setVisible(false);
-                                  }
-                              }
-                          }
-                          
-                          hide("lifeGuard");
-                          hide("lifeBoat");
-                          hide("allBeaches");
-                          
-
-       
-                    $(".checkbox").click(function(){
-                                    var cat = $(this).attr("value" );                                   
-                                    if ( $(this).prop(":checked"))
-                                    {
-                                        show(cat);
-                                        console.log(cat);
-                                        console.log(markers);
-                                    }
-                                    else
-                                    {
-                                        hide(cat);
-                                        console.log(cat);
-                                    }
-                                  });
-                    
-                    
+                        
+                        
+                        
+                       
                     
                 
           });

@@ -143,8 +143,21 @@ svg{
     align-content:center;
 }
 
-  #map-canvas {
+#maps-box{
+    display: flex;
+    flex-direction: row ;
+    width: 90%;
+}
 
+#form{
+    margin-top:8rem;
+     -moz-box-shadow: 10px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 10px 3px 5px 6px #ccc;
+        box-shadow: 10px 3px 5px 6px #ccc;
+}
+
+  #map-canvas {
+        flex-grow:1;
         min-height: 50vh;
         width: 90%;
         margin-top: 8rem;
@@ -250,7 +263,7 @@ td {
     #map-canvas {
 
         min-height: 50vh;
-        width: 90%;
+        width: 60%;
         margin-top: 8rem;
         -moz-box-shadow: 10px 3px 5px 6px #ccc;
         -webkit-box-shadow: 10px 3px 5px 6px #ccc;

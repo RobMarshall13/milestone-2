@@ -32,41 +32,40 @@
 			<button id="enter" class="arrow"></button>
 	</div>
 <div id="container">
-	<div id="map-canvas" class="hide"></div>
-
+	<div id="maps-box">
+		
+			<fieldset id="form">
+		
+			    <p>
+			
+			    <input class="checkbox" id="lifeGuard" name="lifeGuard" type="checkbox" value="lifeGuard" />
+			
+			    <label for="lifeGuard">Life Guarded Beaches</label>
+			
+			    </p>
+			
+			    <p>
+			
+			    <input class="checkbox" id="lifeBoat" name="lifeBoat" type="checkbox" value="lifeBoat" />
+			
+			    <label for="lifeBoat">Life Boat Stations</label>
+			
+			    </p>
+			
+			    <p>
+			
+			    <input class="checkbox" id="allBeaches" name="allBeaches" type="checkbox" value="allBeaches" />
+			
+			    <label for="allBeaches">All Beaches</label>
+			
+			    </p>
+		
+			</fieldset>
+			<div id="map-canvas" class="hide"></div>
+	</div>
 		<h2 id="placeName" ></h2>
 		<div  id="chartButton"  >
-		<fieldset id="form">
-
-    <p>
-
-    <input class="checkbox" id="lifeGuard" name="lifeGuard" type="checkbox" value="lifeGuard" />
-
-    <label for="lifeGuard">Life Guarded Beaches</label>
-
-    </p>
-
-    <p>
-
-    <input class="checkbox" id="lifeBoat" name="lifeBoat" type="checkbox" value="lifeBoat" />
-
-    <label for="lifeBoat">Life Boat Stations</label>
-
-    </p>
-
-    <p>
-
-    <input class="checkbox" id="allBeaches" name="allBeaches" type="checkbox" value="allBeaches" />
-
-    <label for="allBeaches">All Beaches</label>
-
-    </p>
-
-    
-
-    
-
-</fieldset>
+	
 		<button class="hide" id="chart">See tide chart</button>
 			<a target="_blank" class="hide" id="wikilink">wiki</a>
 		</div>
