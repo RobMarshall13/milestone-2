@@ -1,7 +1,8 @@
 $(document).ready(function() {
      
-  
-// var rapid = new RapidAPI('https-milestone-2-robmarshall-c9users-io_5bc466fce4b085e3f408a248', '0ebd2fac-27c4-4257-b4c8-d7e0573063dc');
+     
+    const rapid = new RapidAPI('https-milestone-2-robmarshall-c9users-io_5bc466fce4b085e3f408a248', '0ebd2fac-27c4-4257-b4c8-d7e0573063dc');
+   
 
     $.ajax({
      url:"assets/life-guarded-beaches.json",
@@ -233,8 +234,8 @@ function initMap() {
                     return function getData() {
                         fetch(`https://api.stormglass.io/point?lat=${locations[i].lat}&lng=${locations[i].long}&params=${params}`, {
                             headers: {
-                                //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                                'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                                'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+                                //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
                                 //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                             }
     
@@ -343,14 +344,12 @@ function initMap() {
                           infoWindow.setContent(locations[i].label + locations[i].url);
                           infoWindow.open(map, marker);
                           
-                          
-                          
                            $.ajax({
       headers:{
           'X-Mashape-Key':`zEj3xVyla2mshD4nhEbK2eKtzHS4p1jLZ1rjsntODvg6i0c41K`,
           'X-Mashape-Host': `webcamstravel.p.rapidapi.com`
       },
-     url:`https://webcams.travel/webcams/list/nearby=${locations[i].lat},${locations[i].long},3`,
+     url:`https://webcamstravel.p.rapidapi.com/webcams/list/nearby=${locations[i].lat},${locations[i].long},3?lang=en&show=webcams%3Aimage%2Clocation`,
       dataType: "json",
       success: function(data){
           console.log(data);
