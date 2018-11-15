@@ -1,11 +1,8 @@
 $(document).ready(function() {
-    
-    
-        var locations = [] ; 
-        
-
- 
      
+  
+var rapid = new RapidAPI('https-milestone-2-robmarshall-c9users-io_5bc466fce4b085e3f408a248', '0ebd2fac-27c4-4257-b4c8-d7e0573063dc');
+
     $.ajax({
      url:"assets/life-guarded-beaches.json",
       dataType: "json",
@@ -16,62 +13,55 @@ $(document).ready(function() {
           }
         }
       });
-  
+      
+      
+             
 
-    var markers = new Array();
+
+              
+            // function for changing meters to feet
+              function toFeet(meter) {
+                  return meter * 3.28;
+              }
+
+             // set global variables for use later 
+            var hours;
+            var htmlString;
+            var locations = [];
+            var markers = new Array();
             var marker, i;
-            var iconSrc = {};   
-    
-    
+            var iconSrc = {};  
+            
+            //set parameters for api information we need
+             const params = 'swellHeight,swellDirection,swellPeriod,windDirection,windSpeed,waterTemperature,airTemperature,visibility,seaLevel';
+            // generic map icons to be changed later
+            iconSrc['lifeGuard'] = 'http://labs.google.com/ridefinder/images/mm_20_red.png';
+            iconSrc['lifeBoat'] = 'http://labs.google.com/ridefinder/images/mm_20_green.png';
+            iconSrc['alllBeaches'] = 'http://labs.google.com/ridefinder/images/mm_20_yellow.png';
+   
+   
+            // remove landing page
+            $("#enter").click(function() {
+                $("#landing").hide("slow");
+                $("#map-canvas").removeClass("hide");
+                $("#control").removeClass("hide");
+                $(".navbar").removeClass("hide")
+               
+                initMap();
+                
+            });
+            
+            //tide chart toggle
+             $("#chart").click(function() {
+                  $("#chartDiv").slideToggle(500)
+              });
+          
+  
    
     
 
-
-
-
-
-
-
-
-    $("#enter").click(function() {
-        $("#landing").hide("slow");
-        $("#map-canvas").removeClass("hide");
-        $("#map-speech")
-        $("#control").removeClass("hide");
-        $(".navbar").removeClass("hide")
-       
-        initMap();
-        
-    });
-    
-    $("#chart").click(function(){
-        $("#chartDiv").slideToggle(500)
-    });
-    
-    
-        var locations = [] ; 
-       
-        
-      
-       function toFeet(meter) {
-      return meter * 3.28;
-    }  
-        
-     
- 
-  
-  
-     
-
-    //create locations coordinates offshore close to named town to get marine information for that area.
-  
-
-    //set parameters for api information we need
-    const params = 'swellHeight,swellDirection,swellPeriod,windDirection,windSpeed,waterTemperature,airTemperature,visibility,seaLevel';
-
-    var hours;
-    var htmlString;
-   // function for adding dynamically positioned images
+   
+   // function for adding dynamically positioned images in the table
     $.fn.animateRotate = function(angle, duration, easing, complete) {
                                return this.each(function() {
                                    var $elem = $(this);
@@ -88,81 +78,81 @@ $(document).ready(function() {
                                    });
                                });
                            };
-
-function makeChart(lat, lon){
-    d3.select("#chartDiv").select("svg").remove();
-     const svg = d3.select('#chartDiv')
-        .append('svg')
-        .attr('width', 3000)
-        .attr('height', 300);
-        
-        //create margins and dims
-        const margin = {top: 20, right: 20, bottom: 70, left: 70};
-        const graphWidth = 3000 - margin.left - margin.right;
-        const graphHeight = 300 - margin.top - margin.bottom;
-        
-        const graph = svg.append('g')
-        .attr('width', graphWidth )
-        .attr('height', graphHeight)
-        .attr('transform', `translate(${margin.left},${margin.top})`);
-        
-        const xAxisGroup = graph.append('g')
-            .attr('transform', `translate(0, ${graphHeight})`);
-         const yAxisGroup = graph.append('g');
-    
-     d3.json('https://www.worldtides.info/api?heights&lat='+lat+'&lon='+lon+'&key=050b6b82-e0ab-48a4-a8f7-6da744f09782').then (function(data){
-    
-        var  Data = data.heights;
-        Data.forEach(function(d) {
-           d3.format('d');
-            d.dt = new Date(d.dt * 1000).toLocaleString();
-             d.height = +d.height;
-        });
-    
-        const rects = graph.selectAll('rect')
-            .data(Data);
-       
-        
-        const y =d3.scaleLinear()
-            .domain([-3, d3.max(Data, d => d.height )])
-            .range([ graphHeight, -3]);
+        // make tide chart
+        function makeChart(lat, lon){
+            d3.select("#chartDiv").select("svg").remove();
+             const svg = d3.select('#chartDiv')
+                .append('svg')
+                .attr('width', 3000)
+                .attr('height', 300);
+                
+                //create margins and dims
+                const margin = {top: 20, right: 20, bottom: 70, left: 70};
+                const graphWidth = 3000 - margin.left - margin.right;
+                const graphHeight = 300 - margin.top - margin.bottom;
+                
+                const graph = svg.append('g')
+                .attr('width', graphWidth )
+                .attr('height', graphHeight)
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+                
+                const xAxisGroup = graph.append('g')
+                    .attr('transform', `translate(0, ${graphHeight})`);
+                 const yAxisGroup = graph.append('g');
             
+             d3.json('https://www.worldtides.info/api?heights&lat='+lat+'&lon='+lon+'&key=050b6b82-e0ab-48a4-a8f7-6da744f09782').then (function(data){
             
-        const x = d3.scaleBand()
-            .domain(Data.map(item => item.dt))
-            .range([0, 3000])
-            .paddingInner(0.2)
-            .paddingOuter(0.2);
-        
-       
-        
-        rects.attr('width', x.bandwidth)
-            .attr('height', d => graphHeight - y(d.height))
-            .attr('fill', 'orange')
-            .attr('x', (d,i) => x(d.dt))
-             .attr('y', d => y(d.height));
-        
-        rects.enter()
-        .append('rect')
-            .attr('width', x.bandwidth())
-            .attr('height', d => graphHeight - y(d.height))
-            .attr('fill', 'orange')
-            .attr('x', d => x(d.dt))
-            .attr('y', d => y(d.height));
+                var  Data = data.heights;
+                Data.forEach(function(d) {
+                   d3.format('d');
+                    d.dt = new Date(d.dt * 1000).toLocaleString();
+                     d.height = +d.height;
+                });
             
-            const xAxis = d3.axisBottom(x);
-            const yAxis = d3. axisLeft(y)
-            .ticks(7)
-            .tickFormat(d => d + ' metres');
-            
-            xAxisGroup.call(xAxis);
-            yAxisGroup.call(yAxis);
-            xAxisGroup.selectAll('text')
-            .attr('transform', 'rotate(-40)')
-            .attr('text-anchor', 'end');
-         });
-        }
- 
+                const rects = graph.selectAll('rect')
+                    .data(Data);
+               
+                
+                const y =d3.scaleLinear()
+                    .domain([-3, d3.max(Data, d => d.height )])
+                    .range([ graphHeight, -3]);
+                    
+                    
+                const x = d3.scaleBand()
+                    .domain(Data.map(item => item.dt))
+                    .range([0, 3000])
+                    .paddingInner(0.2)
+                    .paddingOuter(0.2);
+                
+               
+                
+                rects.attr('width', x.bandwidth)
+                    .attr('height', d => graphHeight - y(d.height))
+                    .attr('fill', 'orange')
+                    .attr('x', (d,i) => x(d.dt))
+                     .attr('y', d => y(d.height));
+                
+                rects.enter()
+                .append('rect')
+                    .attr('width', x.bandwidth())
+                    .attr('height', d => graphHeight - y(d.height))
+                    .attr('fill', 'orange')
+                    .attr('x', d => x(d.dt))
+                    .attr('y', d => y(d.height));
+                    
+                    const xAxis = d3.axisBottom(x);
+                    const yAxis = d3. axisLeft(y)
+                    .ticks(7)
+                    .tickFormat(d => d + ' metres');
+                    
+                    xAxisGroup.call(xAxis);
+                    yAxisGroup.call(yAxis);
+                    xAxisGroup.selectAll('text')
+                    .attr('transform', 'rotate(-40)')
+                    .attr('text-anchor', 'end');
+                 });
+                }
+         
 //initiate map
 function initMap() {
     
@@ -173,16 +163,16 @@ function initMap() {
         
     });
     
-       function setMapOnAll(map) {
-                            for (var i = 0; i < markers.length; i++) {
-                              markers[i].setMap(map);
-                            }
-                          }
-    
-                                   function show(category) {
+    //request map markers on selection
+                      
+  
+                       function show(category) {
+                        
                         for (var i=0; i<markers.length; i++) {
-                          if (locations[i][7] == category) {
-                            setMapOnAll(map);
+                            //   console.log(locations[i].cat);
+                          if (locations[i].cat === category) {
+                            //   console.log('success!'); // This if statement is never getting hit!
+                            markers[i].setVisible(true);
                           }
                         }
                       }
@@ -190,74 +180,54 @@ function initMap() {
                           
                           function hide(category) {
                               for (var i = 0; i < markers.length; i++) {
-                                  if (locations[i][7] == category) {
-                                      setMapOnAll(null);
+                                  if (locations[i].cat === category) {
+                                       markers[i].setVisible(false);
                                   }
                               }
                           }
                           
-                          hide("lifeGuard");
-                          hide("lifeBoat");
-                          hide("allBeaches");
+                       
                           
 
        
                     $(".checkbox").click(function(){
+                      
                                     var cat = $(this).attr("value" );                                   
-                                    if ( $(this).prop("checked", true))
+                                    if ( $(this).is(":checked", true))
                                     {
                                         show(cat);
-                                        console.log(cat);
-                                        console.log(markers);
+                                        // console.log(cat);
+                                        // console.log(markers);
+                                        // console.log(locations);
                                     }
                                     else
                                     {
                                         hide(cat);
-                                        console.log(cat);
+                                        // console.log(cat);
                                     }
                                   });
-                    
-                    
-   
-       
-    
-          
-            
-     
- 
+  
         // Info Window initialize
             var infoWindow = new google.maps.InfoWindow();
-            
-                       
-          
-            
-            iconSrc['lifeGuard'] = 'http://labs.google.com/ridefinder/images/mm_20_red.png';
-            iconSrc['lifeBoat'] = 'http://labs.google.com/ridefinder/images/mm_20_green.png';
-            iconSrc['allBeaches'] = 'http://labs.google.com/ridefinder/images/mm_20_yellow.png';
-                                    
-               
-          
+ 
+       // iterate through locations array and push to markers array
           for( i=0 ; i < locations.length; i++){
-               console.log(locations[i]);
+              
                    marker = new google.maps.Marker({
                     position: new google.maps.LatLng(locations[i].lat,locations[i].long ),
-                    
+                    map: map,
                     title: locations[i].label,
-                    icon: iconSrc[locations[i][7]]
+                    icon: iconSrc[locations[i].cat]
                     
                    
                 });
+                
+                   hide("lifeGuard");
+                          hide("lifeBoat");
+                          hide("alllBeaches");
                
                 markers.push(marker);
-                
-                
-                
-
-                
-        
-           
-
-
+  
                 // gets relevant api data when offshore marker is clicked
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function getData() {
@@ -274,18 +244,16 @@ function initMap() {
                             htmlString = '';
                             hours = data.hours;
                             console.log(hours);
-                            
-                      
- 
-                        
-                        
+     
+                            // call chart function     
                           makeChart(locations[i].lat, locations[i].long);
 
 
-                          document.getElementById("placeName").textContent = locations[i].Label;
+                          document.getElementById("placeName").textContent = locations[i].label;
                           $("#placeName").addClass("shadow");
                           document.getElementById("wikilink").setAttribute('href', "https://en.wikipedia.org/wiki/" + locations[i].label);
-
+                            
+                            // helper function for extracting api info
                           const get = (p, o) =>
                               p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
 
@@ -347,7 +315,9 @@ function initMap() {
                          
                           $("p").removeClass("hide");
 
-
+                            
+                            
+                            // rotate images arrow images in table
                           for (var image in swellDirections) {
 
                               $("#" + image).animateRotate(360 + swellDirections[image], 1000);
@@ -370,9 +340,25 @@ function initMap() {
 
 
                           });
-                          infoWindow.setContent(locations[i].Label);
+                          infoWindow.setContent(locations[i].label + locations[i].url);
                           infoWindow.open(map, marker);
+                          
+                          rapid.call( `webcams.travel./webcams/list/nearby=${locations[i].lat},${locations[i].long},3`, { 
+	'X-Mashape-Key': 'zEj3xVyla2mshD4nhEbK2eKtzHS4p1jLZ1rjsntODvg6i0c41K',
+	'X-Mashape-Host': 'webcamstravel.p.rapidapi.com',
+}).on('success', function (payload) {
+	 /*YOUR CODE GOES HERE*/ 
+}).on('error', function (payload) {
+	 /*YOUR CODE GOES HERE*/ 
+});
+                          
+      
                           };
+ 
+
+
+
+
 
 
                           })(marker, i));
@@ -380,12 +366,7 @@ function initMap() {
                          } 
                          
                         }
-                        
-                        
-                        
-                       
-                    
-                
+   
           });
     
       
