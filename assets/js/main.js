@@ -1,7 +1,7 @@
 $(document).ready(function() {
      
   
-var rapid = new RapidAPI('https-milestone-2-robmarshall-c9users-io_5bc466fce4b085e3f408a248', '0ebd2fac-27c4-4257-b4c8-d7e0573063dc');
+// var rapid = new RapidAPI('https-milestone-2-robmarshall-c9users-io_5bc466fce4b085e3f408a248', '0ebd2fac-27c4-4257-b4c8-d7e0573063dc');
 
     $.ajax({
      url:"assets/life-guarded-beaches.json",
@@ -343,16 +343,19 @@ function initMap() {
                           infoWindow.setContent(locations[i].label + locations[i].url);
                           infoWindow.open(map, marker);
                           
-                          rapid.call( `webcams.travel./webcams/list/nearby=${locations[i].lat},${locations[i].long},3`, { 
-	'X-Mashape-Key': 'zEj3xVyla2mshD4nhEbK2eKtzHS4p1jLZ1rjsntODvg6i0c41K',
-	'X-Mashape-Host': 'webcamstravel.p.rapidapi.com',
-}).on('success', function (payload) {
-	 /*YOUR CODE GOES HERE*/ 
-}).on('error', function (payload) {
-	 /*YOUR CODE GOES HERE*/ 
-});
                           
-      
+                          
+                           $.ajax({
+      headers:{
+          'X-Mashape-Key':`zEj3xVyla2mshD4nhEbK2eKtzHS4p1jLZ1rjsntODvg6i0c41K`,
+          'X-Mashape-Host': `webcamstravel.p.rapidapi.com`
+      },
+     url:`https://webcams.travel/webcams/list/nearby=${locations[i].lat},${locations[i].long},3`,
+      dataType: "json",
+      success: function(data){
+          console.log(data);
+        }
+      });
                           };
  
 
