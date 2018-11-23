@@ -1,439 +1,100 @@
-.slider {
-	/* set initial width */
-	width: 1000px;
-		   
-	/* hide the content that overflows (to allow second box to show through) */
-	overflow: hidden;
-	display: inline-block;
-		   
-	/* skew container so that it has angled edge, and set up transition */
-	transform: skewX(-20deg);
-	transition: width 1.2s ease-in-out;
-		  
-	/* give negative margin to remove gap caused by left hand skew */
-	margin-left: -160px;
-	border-right: 10px solid ghostwhite;
-		   
-	/* hide pointer events for unseen content */
-	pointer-events: none;
-}
-		
-/* set the size of the boxes and any decoration */
-.box { 
-	width: 100vw;
-	height: 100%;
-	
-
-}
-		
-/* make the links the size of the full boxes (not needed for technique) */
-.box a { 
-	display: block; 
-	width: 100%; 
-	height: 100vh;
-		
-}
-		
-.sunset {
-	/* skew back by negative of parent’s skew so contents is upright */
-	transform: skewX(20deg);
-		  
-	background: url(image/130506-surfing1_jnlmxo.jpeg) no-repeat;
-	margin-left: 76px; /* give margin to push content away from left slanted edge */
-	
-}
-		
-.sunrise {
-	background:  url(image/7026660-big-waves-pictures.jpg) no-repeat;
-	position: absolute; 
-	box-shadow: 0 0 10px rgba(0, 0, 0, .7);
-}
-		
- make first box bigger on hover, and smaller when hover second box 
-.slider:hover {
-	width: 760px;
-}
-		
-.sunrise:hover + .slider { 
-	 width: 250px;
-}
-
-
-
-
-
-
-#bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-
-
-}
-
-td img {
-     -webkit-filter: drop-shadow(5px 5px 5px #222);
-    filter:         drop-shadow(5px 5px 5px #222); 
-}
-
-svg{
-     -webkit-filter: drop-shadow(5px 5px 5px #000);
-    filter:         drop-shadow(5px 5px 5px #000);   
-}
-
-
-
-.navTitle {
-    text-align: center;
-    position: relative;
-
-}
-
-.navbar {
-    overflow: hidden;
-    background-color: black;
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: auto;
-    z-index: 1;
-    color: orange;
-    -moz-box-shadow: 10px 3px 5px 6px #ccc;
-    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-    box-shadow: 10px 3px 5px 6px #ccc;
-    margin-bottom: 4rem;
-    margin-left: -8px;
-    text-align: center;
-    font-family: 'Amatic SC', cursive;
-    font-size: 20px;
-
-}
-
-
-
-.title {
-
-    font-family: 'Amatic SC', cursive;
-    font-size: 15rem;
-    margin: 0;
-    position: absolute;
-    top: 28%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-
-
-
-
-#landing {
-    /*background: url("image/big-wave.jpg") no-repeat center center fixed;*/
-    /*-webkit-background-size: cover;*/
-    /*-moz-background-size: cover;*/
-    /*-o-background-size: cover;*/
-    /*background-size: cover;*/
-    height: 100vh;
-    margin-top: 0;
-}
-
-
-#enter {
-   
-    position: absolute;
-    margin-left: -100px;
-    left: 50%;
-    width: 200px;
-    height: 200px;
-    bottom: 50px;
-
-}
-
-.arrow {
-    background-image: url("image/if_Arrow_30_2104129.png");
-    background-size: cover;
-    background-color: transparent;
-    -webkit-animation: bounce 1.25s infinite;
-    border-color: transparent;
-}
-
-@-webkit-keyframes bounce {
-    0% {
-        transform: scale(1, 1) translate(0px, 0px);
-    }
-
-    30% {
-        transform: scale(1, 0.95) translate(0px, 5px);
-    }
-
-    75% {
-        transform: scale(1, 1.1) translate(0px, -5px);
-    }
-
-    100% {
-        transform: scale(1, 1) translate(0px, 0px);
-    }
-}
-
-
-.hide {
-    display: none;
-}
-
-
-
-
-
-
-
-#infowindow-content .title {
-    font-weight: bold;
-}
-
-#infowindow-content {
-    display: none;
-}
-
-#map #infowindow-content {
-    display: inline;
-}
-
-
-#container{
+body{
     width:100vw;
-    display:flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    align-content:center;
 }
 
-#maps-box{
+#main{
+    
+    height: 100vh;
+    width:100vw;
     display: flex;
-    flex-direction: row ;
-    width: 90%;
+    flex-flow: column nowrap;
+    padding: none;
+    
 }
 
-#form{
-    margin-top:8rem;
-     -moz-box-shadow: 10px 3px 5px 6px #ccc;
-        -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-        box-shadow: 10px 3px 5px 6px #ccc;
-}
-
-  #map-canvas {
-        flex-grow:1;
-        min-height: 50vh;
-        width: 90%;
-        margin-top: 8rem;
-        -moz-box-shadow: 10px 3px 5px 6px #ccc;
-        -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-        box-shadow: 10px 3px 5px 6px #ccc;
-        border: 2px solid black;
-        padding-top: 30px;
-
-    }
-    
-
-
-#chartDiv {
-    width: 90%;
-    height: auto;
-    
-    margin-bottom: 30px;
-     overflow-x: auto;
-     overflow-y: hidden;
-      background-color: lightblue;
-        -moz-box-shadow: 10px 3px 5px 6px #ccc;
-    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-    box-shadow: 10px 3px 5px 6px #ccc;
-     border: 1px solid black;
+nav{
    
-}
-
-button,
-#wikilink{
-     background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
+    margin-top: 0px;
+    width: 100%;
+    height: 50px;
     text-align: center;
-    text-decoration: none;
-    margin-bottom: 1rem;
-    font-size: 16px;
-    display:inline-block;
+    background-color: #004777;
+    color: #FF7700;
+    display: block;
 }
 
-
-
-
-#tideTable {
-
-    width: 90%;
-    height: 2rem;
-    
-    border-collapse: separate;
-    text-align: center;
-    caption-side: top;
-    -moz-box-shadow: 10px 3px 5px 6px #ccc;
-    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-    box-shadow: 10px 3px 5px 6px #ccc;
-    padding: 0;
-}
-
-
-th {
-    background: lightblue;
-    border-color: black;
-    color: darkBlue;
-}
-
-td {
-    color: blue;
-    padding: 10px;
-}
-
-.odd {
-    background: #ccc;
-}
-
-.shadow {
-    -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-    box-shadow: 10px 3px 5px 6px #ccc;
-
-}
-
-#placeName {
-    width: 85%;
-    background-color: black;
-    color: white;
-    height: 30px;
-    text-align: center;
+#map-canvas{
    
-
+    width: 99%;
+    height: 85%;
+    display: block;
+    float: right;
 }
 
-
-/* tablets and desktop */
-
-@media only screen and (min-width: 361px) {
-
-    p {
-        margin-bottom: 15px;
-        line-height: 20px;
-        max-width: 80% ;
-        text-align:center;
-    }
-
-    #map-canvas {
-
-        min-height: 50vh;
-        width: 60%;
-        margin-top: 8rem;
-        -moz-box-shadow: 10px 3px 5px 6px #ccc;
-        -webkit-box-shadow: 10px 3px 5px 6px #ccc;
-        box-shadow: 10px 3px 5px 6px #ccc;
-        border: 2px solid black;
-        padding-top: 30px;
-
-    }
-    
+#control{
   
+   width: 99%;
+}
+
+#forms{
+   display: flex;
+   flex-flow:row wrap;
+    width: 100%;
+    background-color: #004777;
+    margin-bottom: 0px;
+}
+
+#forms p {
+    flex-grow:1;
+    padding:10px;
+}
+
+#placename{
     
-
-
-
-
-}
-
-/* phones */
-
-@media only screen and (max-width: 360px) {
-    #map-canvas {
-       min-height: 75vh;
-    }
-
-    #tideTable {
-        width: 75vw;
-    }
-    #map-canvas {
-        margin-top: 40%;
-    }
-
-}
-
-
-@media (max-width: 1250px){
-    .title{
-        font-size: 5rem;
-    }
-}
-
-svg{
-    fill:none;
-    stroke: blue;
-}
-
-@media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	
-	}
-	
-	#tideTable{
-	    
-    width: 90%;
-    height: 2rem;
-   
-    border-collapse: separate;
+    background-color:#004777;
+    height: auto;
+   margin: auto;
+    display: block;
     text-align: center;
-    caption-side: top;
-   
-    padding: 0;
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-		border: none;
-	
-	}
-	
-	/*tr { border: 1px solid #ccc; }*/
-	
-	td { 
-		/* Behave  like a "row" */
-		/*border: none;*/
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	td:nth-of-type(1):before { content: "Time"; }
-	td:nth-of-type(2):before { content: "SwellDirection"; }
-	td:nth-of-type(3):before { content: "swell Height"; }
-	td:nth-of-type(4):before { content: "Swell Period"; }
-	td:nth-of-type(5):before { content: "Wind Direction"; }
-	td:nth-of-type(6):before { content: "Wind Speed"; }
-	td:nth-of-type(7):before { content: "Water Temperature"; }
-	td:nth-of-type(8):before { content: "Air Temperature"; }
-	td:nth-of-type(9):before { content: "Visibility"; }
-	td:nth-of-type(10):before { content: "Sea Level"; }
+    width: 100%
+}
+
+#placename h2{
+    margin: 0px;
+    color: black;
+    padding:10px;
+}
+
+#buttons{
+     display: flex;
+   flex-flow:row;
+    width: 100%;
+    margin-top: 0px;
+    height:4rem;
+}
+
+#buttons button{
+     flex-grow:1;
+     height:100%;
+     border: 1px black;
+}
+
+#tableButton{
+    background-color: #40798C;
+}
+
+#chart{
+    background-color: #104F55;
+}
+
+#weather{
+    background-color: #5A7D7C;
+}
+
+#surfForecast{
+    background-color: #073B4C;
+}
+
+#pac-card{
+    padding:20px;
 }

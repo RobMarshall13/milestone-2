@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-<script src='https://s3.amazonaws.com/rapidapi-prod-fe_static/rapidapi.min.js'></script>		
+
 
 
 
@@ -23,79 +23,150 @@
 </head>
 
 <body>
-	<div class="navbar hide">
-		<h2>SURF, SUP & SAIL</h2>
-	</div>
-	
-	<div id="landing" >
-		<div class="box sunrise"><a href="#box2"></a></div>
-<div class="slider">
-	<div class="box sunset"><a href="#box1"></a></div>
-</div>
-			<h1 class="title"> surf,sup&sail.</h1>
-			<button id="enter" class="arrow"></button>
-	</div>
-<div id="container">
-	<div id="maps-box">
-		
-			<fieldset id="form">
-		
-			    <p>
-			
-			    <input class="checkbox"  name="lifeGuard" type="checkbox" value="lifeGuard" />
-			
-			    <label for="lifeGuard">Life Guarded Beaches</label>
-			
-			    </p>
-			
-			    <p>
-			
-			    <input class="checkbox"  name="lifeBoat" type="checkbox" value="lifeBoat" />
-			
-			    <label for="lifeBoat">Life Boat Stations</label>
-			
-			    </p>
-			
-			    <p>
-			
-			    <input class="checkbox"  name="alllBeaches" type="checkbox" value="alllBeaches" />
-			
-			    <label for="alllBeaches">All Beaches</label>
-			
-			    </p>
-		
-			</fieldset>
-			<div id="map-canvas" class="hide"></div>
-	</div>
-		<h2 id="placeName" ></h2>
-		<div  id="chartButton"  >
-	
-		<button class="hide" id="chart">See tide chart</button>
-			<a target="_blank" class="hide" id="wikilink">wiki</a>
-		</div>
-	<div id="chartDiv" class="hide"></div>
+ <container id="main">
+            <nav>
+                <h1 id="header">Surf,Sup&Sail</h1>
+            </nav>
+                <div id="map-canvas"></div>
+                    <div id="control">
+                        <div id="forms">
+                      
+                            	
 
-	<table id='tideTable' class="hide">
-		<thead>
-			<tr>
-				<th>Time</th>
-				<th>Swell Direction</th>
-				<th>Swell Height</th>
-				<th>Swell Period</th>
-				<th>Wind Direction</th>
-				<th>Wind Speed</th>
-				<th>Water Temperature</th>
-				<th>Air Temperature</th>
-				<th>Visibility</th>
-				<th>Sea Level</th>
-			</tr>
-		</thead>
-	</table>
-</div>
+            			    <p>
+            						
+            			    <input class="checkbox"  name="lifeGuard" type="checkbox" value="lifeGuard" />
+            			
+            			    <label for="lifeGuard">Life Guarded Beaches<img src</label>
+            			
+            			    </p>
+            			
+            			    <p>
+            			
+            			    <input class="checkbox"  name="lifeBoat" type="checkbox" value="lifeBoat" />
+            			
+            			    <label for="lifeBoat">Life Boat Stations</label>
+            			
+            			    </p>
+            			
+            			   
+            			     <p>
+            			
+            			    <input class="checkbox"  name="marina" type="checkbox" value="marina" />
+            			
+            			    <label for="marina">Marinas</label>
+            			
+            			    </p>
+            			     <p>
+            			
+            			    <input class="checkbox"  name="harbor" type="checkbox" value="harbor" />
+            			
+            			    <label for="harbor">Harbours</label>
+            			
+            			    </p>
+            			     <p>
+            			
+            			    <input class="checkbox"  name="lighthouse" type="checkbox" value="lighthouse" />
+            			
+            			    <label for="lighthouse">lighthouses</label>
+            			
+            			    </p>
+		
+                     
+                             <p>
+			
+            			    <input class="checkbox"  name="lock" type="checkbox" value="lock" />
+            			
+            			    <label for="lock">Locks</label>
+            			
+            			    </p>
+            			     <p>
+            			
+            			    <input class="checkbox"  name="landmark" type="checkbox" value="landmark" />
+            			
+            			    <label for="landmark">Landmarks</label>
+            			
+            			    </p>
+            			     <p>
+            			
+            			    <input class="checkbox"  name="inlet" type="checkbox" value="inlet" />
+            			
+            			    <label for="inlet">Inlets</label>
+            			
+            			    </p>
+            			      <p>
+            			
+            			    <input class="checkbox"  name="bridge" type="checkbox" value="bridge" />
+            			
+            			    <label for="bridge">Bridges</label>
+            			
+            			    </p>
+            			      <p>
+            			
+            			    <input class="checkbox"  name="ferry" type="checkbox" value="ferry" />
+            			
+            			    <label for="ferry">Ferries</label>
+            			
+            			    </p>
+                       
+                        </div>
+                          <div id="placename">
+                    <h2></h2>
+                </div>
+                <div id="buttons">
+                    	<button class="hide" id="tableButton">Sea State</button>
+		                <button class="hide" id="chart"> Tide Times</button>
+                        <button class="hide" id="weather">Weather</button>
+		                <button class="hide" id="surfForecast">Surf Forecast</button>
+                </div>
+                        <div class="pac-card hide" id="pac-card">
+                            <div id="pac-container">
+                                <input id="pac-input" type="text" placeholder="Enter a location">
+                            </div>
+                        </div>
+                        
+                        <div id="infowindow-content">
+                            <img src="" width="16" height="16" id="place-icon">
+                            <span id="place-name" class="title"></span><br>
+                            <span id="place-address"></span>
+                        </div>
+                    </div>
+                
+              
+    </container>
+    
+    <container id="results">
+        <div id="weatherDiv"></div>
+        <div id="chartDiv"></div>
+        <div id="tableDiv">
+            <table id='tideTable' class="hide">
+        		<thead>
+        			<tr>
+        				<th>Time</th>
+        				<th>Swell Direction</th>
+        				<th>Swell Height</th>
+        				<th>Swell Period</th>
+        				<th>Wind Direction</th>
+        				<th>Wind Speed</th>
+        				<th>Water Temperature</th>
+        				<th>Air Temperature</th>
+        				<th>Visibility</th>
+        				<th>Sea Level</th>
+        			</tr>
+        		</thead>
+	        </table>
+        </div>
+        <div id="surfDiv"></div>
+        <div id="weatherDiv"></div>
+     </container>v>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-DY78LezWel2j9I6OXAevS7qaAsXYQG0&region=uklibraries=places&callback=initMap"></script>
+ <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-DY78LezWel2j9I6OXAevS7qaAsXYQG0&libraries=places&callback=initMap"></script>
+<script src='https://s3.amazonaws.com/rapidapi-prod-fe_static/rapidapi.min.js'></script>
 
 
 <script type="text/javascript" src="assets/js/main.js"></script>
