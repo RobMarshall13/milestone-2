@@ -22,7 +22,7 @@
 	</style>
 </head>
 
-<body>
+<body onload="initialize()">
  <container id="main">
             <nav>
                 <h1 id="header">Surf,Sup&Sail</h1>
@@ -111,15 +111,16 @@
                        
                         </div>
                           <div id="placename">
-                    <h2></h2>
+                    <h2>PlaceName</h2>
                 </div>
+                 </div>
                 <div id="buttons">
-                    	<button class="hide" id="tableButton">Sea State</button>
-		                <button class="hide" id="chart"> Tide Times</button>
-                        <button class="hide" id="weather">Weather</button>
-		                <button class="hide" id="surfForecast">Surf Forecast</button>
+                    	<button  id="tableButton">Sea State</button>
+		                <button  id="chart"> Tide Times</button>
+                        <button  id="weather">Weather</button>
+		                <button  id="surfForecast">Surf Forecast</button>
                 </div>
-                        <div class="pac-card hide" id="pac-card">
+                        <div class="pac-card" id="pac-card">
                             <div id="pac-container">
                                 <input id="pac-input" type="text" placeholder="Enter a location">
                             </div>
@@ -130,26 +131,26 @@
                             <span id="place-name" class="title"></span><br>
                             <span id="place-address"></span>
                         </div>
-                    </div>
+                   
                 
               
     </container>
     
     <container id="results">
         <div id="weatherDiv"></div>
-        <div id="chartDiv"></div>
-        <div id="tableDiv">
-            <table id='tideTable' class="hide">
+        <div id="chartDiv" class="hide"></div>
+        <div id="tableDiv" class="hide">
+            <table id='tideTable'>
         		<thead>
         			<tr>
         				<th>Time</th>
-        				<th>Swell Direction</th>
-        				<th>Swell Height</th>
-        				<th>Swell Period</th>
-        				<th>Wind Direction</th>
-        				<th>Wind Speed</th>
-        				<th>Water Temperature</th>
-        				<th>Air Temperature</th>
+        				<th>Swell<br> Direction</th>
+        				<th>Swell<br> Height</th>
+        				<th>Swell<br> Period</th>
+        				<th>Wind<br> Direction</th>
+        				<th>Wind<br> Speed</th>
+        				<th>Water <br>Temperature</th>
+        				<th>Air<br> Temperature</th>
         				<th>Visibility</th>
         				<th>Sea Level</th>
         			</tr>
@@ -158,18 +159,14 @@
         </div>
         <div id="surfDiv"></div>
         <div id="weatherDiv"></div>
-     </container>v>
+     </container>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
 <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-DY78LezWel2j9I6OXAevS7qaAsXYQG0&libraries=places&callback=initMap"></script>
-<script src='https://s3.amazonaws.com/rapidapi-prod-fe_static/rapidapi.min.js'></script>
+<!--<script type="text/javascript" src="/assets/life-guarded-beaches.js"></script>-->
+<script type="text/javascript" src="assets/js/map.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoLj_zJBGs9T6bUycUSRT6JVBVyszjf5o&libraries=places&callback=initMap"></script>
 
-
-<script type="text/javascript" src="assets/js/main.js"></script>
 
 </body>
 
