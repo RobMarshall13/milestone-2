@@ -2,6 +2,11 @@ body{
     width:100vw;
 }
 
+#header{
+    height:60px;
+    background-color: transparent;
+}
+
 #main{
     
     height: 100vh;
@@ -99,20 +104,45 @@ nav{
     padding:20px;
 }
 
-.hide{
-    display: none;
+
+#results{
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+   
+    
 }
 
 #tableDiv{
- width: auto;
-    height: 2rem;
-   
+    width: 75%;
+    height: auto;
     text-align: center;
     caption-side: top;
-    /*-moz-box-shadow: 10px 3px 5px 6px #ccc;*/
-    /*-webkit-box-shadow: 10px 3px 5px 6px #ccc;*/
-    /*box-shadow: 10px 3px 5px 6px #ccc;*/
     padding: 0;
+   
+    
+}
+
+#weatherDiv{
+    width:20%;
+    text-align: center;
+}
+
+#weatherDiv li{
+    padding:20px;
+    list-style-type: none;
+}
+
+#tideTable{
+    width: 100%;
+}
+
+.icon{
+    height: 50px;
+}
+
+.hide{
+    display: none;
 }
 
 

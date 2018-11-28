@@ -9,6 +9,14 @@ function initialize() {
     var marker, i;
     var iconSrc = {}; 
     
+    var count = -1;//counter for click function that get marine info
+    var counter = -1;// counter for function that gets weather info
+    var lat = [];
+    var lng = [];
+  
+       
+  
+    
     
     //set parameters for api information we need
      const params = 'swellHeight,swellDirection,swellPeriod,windDirection,windSpeed,waterTemperature,airTemperature,visibility,seaLevel';
@@ -63,7 +71,8 @@ function initMap(map) {
             var location = new google.maps.LatLng(locations[i].lat, locations[i].lng);
             addMarker(map, locations.label, location );
             
-            
+            // var infoWindow = new google.maps.InfoWindow();  
+            //  infoWindow.open(map, marker);
   
             }
              map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
@@ -133,11 +142,43 @@ function initMap(map) {
         
           var card = document.getElementById('pac-card');
         var input = document.getElementById('pac-input');
-      
 
-       
-       
 
+$("#past24hours").click(function(){
+    count-=1;
+    counter-=1;
+    console.log(count);
+      getMarineData(lat, lng);
+       getWeatherData(lat,lng);
+});             
+
+$("#tableButton").click(function(){
+    count+=1;
+    counter+=1;
+    console.log(count);
+      getMarineData(lat, lng);
+       getWeatherData(lat,lng);
+       getTideTimes(lat,lng);
+      $("#results").removeClass("hide");
+      $("#chartDiv").removeClass("hide")
+});       
+
+$("#next24hours").click(function(){
+    count+=1;
+    counter+=1;
+    console.log(count);
+      getMarineData(lat, lng);
+       getWeatherData(lat,lng);
+       getTideTimes(lat,lng);
+      $("#results").removeClass("hide");
+      $("#chartDiv").removeClass("hide")
+});       
+       
+//  $("#chart").click(function(){
+//         // call chart function     
+//      getTideTimes(lat,lng);
+//     $("#chartDiv").toggleClass("hide")
+// });
       
     
 
@@ -151,54 +192,56 @@ function addMarker(map, label, location){
      
      
      
-      function zoom(position){
-          map.setZoom(14);
-          map.panTo(position);
-       }
+function zoom(position){
+  map.setZoom(14);
+  map.panTo(position);
+}
     
-        hide("lifeGuard");
-        hide("lifeBoat");
-        hide("marina");
-        hide("harbor");
-        hide("lighthouse");
-        hide("lock");
-        hide("landmark");
-        hide("inlet");
-        hide("bridge");
-        hide("ferry");
-                var lat = [];
-                var lng = [];
+hide("lifeGuard");
+hide("lifeBoat");
+hide("marina");
+hide("harbor");
+hide("lighthouse");
+hide("lock");
+hide("landmark");
+hide("inlet");
+hide("bridge");
+hide("ferry");
+
+
   
   marker.addListener('click', function(){
-              
+            //   $("#placeName").html('<h2>' + locations[i].label + '</h2>')
                 lat = marker.position.lat();
                 lng = marker.position.lng();
-                getMarineData(lat, lng);
-               
                  zoom(marker.getPosition());
-                 });
+                if( count > -1){
+                    count = 0;
+                    counter = 0;
+                    getMarineData(lat,lng);
+                    getWeatherData(lat,lng);
+                }              
+        });
+                 
+}//addMarker close
                     
-                    function getMarineData (lat, lng){
-                        fetch(`https://api.stormglass.io/point?lat=${lat}&lng=${lng}&params=${params}`, {
-                            headers: {
-                                'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                                //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                                //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
-                            }
-    
-                        }).then(function gotData (response) {
-                            return response.json();
-                        }).then(function(data) {
-                          
-                            hours = data.hours;
-                            console.log(hours);
-                            
-                              makeChart(lat,lng);
-                          $("#chart").click(function(){
-                            // call chart function     
-                        
-                        $("#chartDiv").toggleClass("hide")
-                    });
+function getMarineData (lat, lng){
+    fetch(`https://api.stormglass.io/point?lat=${lat}&lng=${lng}&params=${params}`, {
+        headers: {
+            //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+            //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+            'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+        }
+
+    }).then(function gotData (response) {
+        return response.json();
+    }).then(function(data) {
+      
+        hours = data.hours;
+        console.log(hours);
+        
+         
+     
                            
 
                         //   document.getElementById("placename").textContent = locations[i].label;
@@ -209,64 +252,54 @@ function addMarker(map, label, location){
                           const get = (p, o) =>
                               p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
                           htmlString = '';
-                          var swellDirections = {};
-                          var windDirections = {};
-                          //loop for iterating through the data and returning every 6th hour
-                          for (i = 0; i < 120; i += 6) {
-
-                            //   console.log(hours[i]);
-                              // create variables to select specific data for use later on
-                              var DateStamp = new Date(hours[i].time);
-                              var timeStamp = new Date(hours[i].time);
-                              var convertedDate = DateStamp.toLocaleDateString();
-                              var convertedTime = timeStamp.toLocaleTimeString();
-                              var swellDirection = (get(['swellDirection', 0, 'value'], hours[i]));
-                              var swellHeight = toFeet((get(['swellHeight', 0, 'value'], hours[i]))).toFixed(2);
-
-                              var visibility = hours[i]['visibility'][0].value;
-                              var waterTemperature = (get(['waterTemperature', 0, 'value'], hours[i]));
-                              var windDirection = (get(['windDirection', 0, 'value'], hours[i]));
-                              var windSpeed = (get(['windSpeed', 0, 'value'], hours[i]));
-                              var airTemperature = (get(['airTemperature', 0, 'value'], hours[i]));
-                              var swellPeriod = (get(['swellPeriod', 0, 'value'], hours[i]));
-                              var seaLevel = (get(['seaLevel', 0, 'value'], hours[i]));
-
-                              // create id's for dynamically inserted image objects to allow each one to have its own style created from data values.
-                              var imgId = "arrImage" + i.toString();
-                              swellDirections[imgId] = swellDirection;
-
-                              var imgIdwind = "windArrImage" + i.toString();
-                              windDirections[imgIdwind] = windDirection;
-
-
-
-
-                              // build the table from the retrieved data
-                              htmlString += '<tr  class="animatedParent" data-sequence="1000">';
-                              htmlString += '<td>' + convertedDate +'\n'+ convertedTime + '</td>';
-                              htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgId + '"><p>' + swellDirection + '&deg;' + 'C </p>' + '</td>';
-                              htmlString += '<td>' + swellHeight + ' Ft. </td>';
-                              htmlString += '<td>' + swellPeriod + ' sec</td>';
-                              htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgIdwind + '"><p>' + windDirection + '&deg;' + 'C</p>' + '</td>';
-                              htmlString += '<td>' + windSpeed + ' mph </td>';
-                              htmlString += '<td>' + waterTemperature + '&deg;' + 'C</td>';
-                              htmlString += '<td>' + airTemperature + '&deg;' + 'C</td>';
-                              htmlString += '<td>' + visibility + ' km </td>';
-                              htmlString += '<td>' + seaLevel + ' m </td>';
-                              htmlString += '</tr>';
-    
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
+                                              var swellDirections = {};
+                                              var windDirections = {};
+                                              //loop for iterating through the data and returning every 6th hour
+                                              for (i = count*24; i < (count+1)*24; i += 6) {
+                                                     // create variables to select specific data for use later on
+                                                  var DateStamp = new Date(hours[i].time);
+                                                  var timeStamp = new Date(hours[i].time);
+                                                  var convertedDate = DateStamp.toLocaleDateString();
+                                                  var convertedTime = timeStamp.toLocaleTimeString();
+                                                  var swellDirection = (get(['swellDirection', 0, 'value'], hours[i]));
+                                                  var swellHeight = toFeet((get(['swellHeight', 0, 'value'], hours[i]))).toFixed(2);
+                    
+                                                  var visibility = hours[i]['visibility'][0].value;
+                                                  var waterTemperature = (get(['waterTemperature', 0, 'value'], hours[i]));
+                                                  var windDirection = (get(['windDirection', 0, 'value'], hours[i]));
+                                                  var windSpeed = (get(['windSpeed', 0, 'value'], hours[i]));
+                                                  var airTemperature = (get(['airTemperature', 0, 'value'], hours[i]));
+                                                  var swellPeriod = (get(['swellPeriod', 0, 'value'], hours[i]));
+                                                  var seaLevel = (get(['seaLevel', 0, 'value'], hours[i]));
+                    
+                                                  // create id's for dynamically inserted image objects to allow each one to have its own style created from data values.
+                                                  var imgId = "arrImage" + i.toString();
+                                                  swellDirections[imgId] = swellDirection;
+                    
+                                                  var imgIdwind = "windArrImage" + i.toString();
+                                                  windDirections[imgIdwind] = windDirection;
+                    
+                    
+                    
+                    
+                                                  // build the table from the retrieved data
+                                                  htmlString += '<tr  class="animatedParent" data-sequence="1000">';
+                                                  htmlString += '<td>' + convertedDate +'\n'+ convertedTime + '</td>';
+                                                  htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgId + '"><p>' + swellDirection + '&deg;' + 'C </p>' + '</td>';
+                                                  htmlString += '<td>' + swellHeight + ' Ft. </td>';
+                                                  htmlString += '<td>' + swellPeriod + ' sec</td>';
+                                                  htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgIdwind + '"><p>' + windDirection + '&deg;' + 'C</p>' + '</td>';
+                                                  htmlString += '<td>' + windSpeed + ' mph </td>';
+                                                  htmlString += '<td>' + waterTemperature + '&deg;' + 'C</td>';
+                                                  htmlString += '<td>' + airTemperature + '&deg;' + 'C</td>';
+                                                  htmlString += '<td>' + visibility + ' km </td>';
+                                                  htmlString += '<td>' + seaLevel + ' m </td>';
+                                                  htmlString += '</tr>';
+                        
+  
                                         }
-                          
-                         
-                         
-                         
-                       console.log("table");
+ 
+                          console.log("table");
                           $('#tideTable td').parent().remove(); // clear table for next set of data
                           $('#tideTable').append(htmlString); // add data to table
                           $('tr:nth-child(odd)').addClass('odd');
@@ -299,27 +332,22 @@ function addMarker(map, label, location){
 
                           });
                         //   infoWindow.setContent(locations[i].label + locations[i].url);
-                        //   infoWindow.open(map, marker);
+                         
 
       
  
                           
     
                           };
-                          
- 
-                         
-                          
   
-  
-                }//addMarker close
+               
              initMap();
              }// success function close
         });//ajax close   
         
-        $("#tableButton").click(function(){
-            $("#tableDiv").slideToggle(500)
-        });
+        // $("#tableButton").click(function(){
+        //     $("#tableDiv").slideToggle(500)
+        // });
         
       
             
@@ -355,7 +383,7 @@ function addMarker(map, label, location){
   });
   
    // make tide chart
-        function makeChart(lat, lon){
+        function getTideTimes(lat, lon){
             d3.select("#chartDiv").select("svg").remove();
              const svg = d3.select('#chartDiv')
                 .append('svg')
@@ -428,9 +456,33 @@ function addMarker(map, label, location){
                     .attr('text-anchor', 'end');
                  });
                 } 
+  var weather = [];
   
+  function getWeatherData(lat, lng){
+            fetch(`https://api.apixu.com/v1/forecast.json?key=a44c5e70bf164253873132016182711&q=${lat},${lng}&days=4`,
+    
+                        ).then(function Data (response) {
+                            return response.json();
+                        }).then(function(data) {
+                          
+                            weather = data.forecast.forecastday;
+                            console.log(weather);
+                            
+                           
+                             var icon = weather[counter].day.condition.icon;
+                             var condition = weather[counter].day.condition.text;
+                             var sunrise = weather[counter].astro.sunrise;
+                             var sunset = weather[counter].astro.sunset;
+                             var precip =  weather[counter].day.totalprecip_mm;
+                             var humidity = weather[counter].day.avghumidity;
+                            
+                            
+                            
+                             $("#weatherDiv").html('<ul><li class="icon"><img src="'+ icon +'"></li><li>'+ condition +'</li><li>Sunrise: '+ sunrise +'</li><li>Sunset: '+ sunset +'</li><li>Precipitation: '+ precip +' mm</li><li>Humidity: '+ humidity +'</li>')
+                         });
 
-            
+                    } 
+                    
             
             
           }//initialize function close
