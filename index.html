@@ -14,7 +14,10 @@
 <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 
@@ -23,101 +26,109 @@
 </head>
 
 <body onload="initialize()">
- <container id="main">
-            <nav>
-                <h1 id="header">Surf,Sup&Sail</h1>
-            </nav>
-                <div id="map-canvas"></div>
-                    <div id="control">
-                        <div id="forms">
-                      
-                            	
-
-            			    <p>
-            						
-            			    <input class="checkbox"  name="lifeGuard" type="checkbox" value="lifeGuard" />
-            			
-            			    <label for="lifeGuard">Life Guarded Beaches<img src</label>
-            			
-            			    </p>
-            			
-            			    <p>
-            			
-            			    <input class="checkbox"  name="lifeBoat" type="checkbox" value="lifeBoat" />
-            			
-            			    <label for="lifeBoat">Life Boat Stations</label>
-            			
-            			    </p>
-            			
-            			   
-            			     <p>
-            			
-            			    <input class="checkbox"  name="marina" type="checkbox" value="marina" />
-            			
-            			    <label for="marina">Marinas</label>
-            			
-            			    </p>
-            			     <p>
-            			
-            			    <input class="checkbox"  name="harbor" type="checkbox" value="harbor" />
-            			
-            			    <label for="harbor">Harbours</label>
-            			
-            			    </p>
-            			     <p>
-            			
-            			    <input class="checkbox"  name="lighthouse" type="checkbox" value="lighthouse" />
-            			
-            			    <label for="lighthouse">lighthouses</label>
-            			
-            			    </p>
 		
-                     
-                             <p>
+ <container  id="main">
+           
+				<div id="map-canvas"></div>
+				<nav class="navbar navbar-expand-lg ">
+					
+						<button id="dropdown-button" class="  btn btn-lg btn-block btn-primary dropdown-toggle" type="button" data-toggle="collapse" data-target="#forms" aria-controls="forms" aria-expanded="false" aria-label="Toggle navigation">
+								Click Me
+							</button>
+							<ul class="justify-content-center nav-fill collapse navbar-collapse" id="forms">
+				  
+							
+		
+						<li class="nav-item nav-link">
+								
+						<input class="checkbox"  name="lifeGuard" type="checkbox" value="lifeGuard" />
+					
+						<label for="lifeGuard">Life Guarded Beaches</label>
+					
+					</li>
+					
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="lifeBoat" type="checkbox" value="lifeBoat" />
+					
+						<label for="lifeBoat">Life Boat Stations</label>
+					
+					</li>
+					
+					   
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="marina" type="checkbox" value="marina" />
+					
+						<label for="marina">Marinas</label>
+					
+					</li>
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="harbor" type="checkbox" value="harbor" />
+					
+						<label for="harbor">Harbours</label>
+					
+					</li>
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="lighthouse" type="checkbox" value="lighthouse" />
+					
+						<label for="lighthouse">lighthouses</label>
+					
+					</li>
+		
+				 
+						<li class="nav-item">
+		
+						<input class="checkbox"  name="lock" type="checkbox" value="lock" />
+					
+						<label for="lock">Locks</label>
+					
+					</li>
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="landmark" type="checkbox" value="landmark" />
+					
+						<label for="landmark">Landmarks</label>
+					
+					</li>
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="inlet" type="checkbox" value="inlet" />
+					
+						<label for="inlet">Inlets</label>
+					
+					</li>
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="bridge" type="checkbox" value="bridge" />
+					
+						<label for="bridge">Bridges</label>
+					
+					</li>
+						<li class="nav-item">
+					
+						<input class="checkbox"  name="ferry" type="checkbox" value="ferry" />
+					
+						<label for="ferry">Ferries</label>
+					
+						</li>
+				   
+					</ul>
+				
 			
-            			    <input class="checkbox"  name="lock" type="checkbox" value="lock" />
-            			
-            			    <label for="lock">Locks</label>
-            			
-            			    </p>
-            			     <p>
-            			
-            			    <input class="checkbox"  name="landmark" type="checkbox" value="landmark" />
-            			
-            			    <label for="landmark">Landmarks</label>
-            			
-            			    </p>
-            			     <p>
-            			
-            			    <input class="checkbox"  name="inlet" type="checkbox" value="inlet" />
-            			
-            			    <label for="inlet">Inlets</label>
-            			
-            			    </p>
-            			      <p>
-            			
-            			    <input class="checkbox"  name="bridge" type="checkbox" value="bridge" />
-            			
-            			    <label for="bridge">Bridges</label>
-            			
-            			    </p>
-            			      <p>
-            			
-            			    <input class="checkbox"  name="ferry" type="checkbox" value="ferry" />
-            			
-            			    <label for="ferry">Ferries</label>
-            			
-            			    </p>
-                       
-                        </div>
-                          <div id="placename">
+		</nav>
+                    
+                          <div id="placeName">
                     <h2></h2>
-                </div>
+                
                  </div>
                 <div id="buttons">
-                    <a href="#chartDiv"><button  id="tableButton">Weather Info</button></a>
-                        <button  id="past24hours">Past 24 Hours</button>
-		                <button  id="next24hours">Next 24 Hours</button>
+                    
+						<button  id="past24hours"><< Past 24 Hours</button>
+						<a href="#chartDiv"><button  id="tableButton">Weather Info</button></a>
+		                <button  id="next24hours">Next 24 Hours>></button>
                 </div>
                         <div class="pac-card" id="pac-card">
                             <div id="pac-container">
@@ -138,9 +149,9 @@
     <container id="results" class="hide">
        
        
-        <div id="tableDiv" >
+        <div id="tableDiv" class="container">
             <table id='tideTable'>
-        		<thead>
+        		<thead class="hide">
         			<tr>
         				<th>Time</th>
         				<th>Swell<br> Direction</th>
@@ -157,12 +168,13 @@
 	        </table>
 	         
         </div>
-       <div id="weatherDiv"></div>
        
-     </container>
-      <div id="chartDiv" class="hide"></div>
+       
+	 </container>
+	 <div id="weatherDiv" class="container"></div>
+      <div id="chartDiv" class="hide container"></div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
 <!--<script type="text/javascript" src="/assets/life-guarded-beaches.js"></script>-->
 <script type="text/javascript" src="assets/js/map.js"></script>

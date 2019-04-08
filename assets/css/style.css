@@ -1,3 +1,7 @@
+html{
+    width: 100vw;
+}
+
 body{
     width:100vw;
 }
@@ -17,16 +21,24 @@ body{
     
 }
 
+nav li{
+    list-style-type: none; 
+    z-index: 2;
+    background-color: #004777;
+}
+
+
 nav{
-   
-    margin-top: 0px;
-    width: 100%;
-    height: 50px;
+    height: 6rem;
     text-align: center;
     background-color: #004777;
     color: #FF7700;
     display: block;
+    
 }
+
+
+
 
 #map-canvas{
    
@@ -36,50 +48,28 @@ nav{
     float: right;
 }
 
-#control{
-  
-   width: 99%;
-}
 
-#forms{
-   display: flex;
-   flex-flow:row wrap;
-    width: 100%;
-    background-color: #004777;
-    margin-bottom: 0px;
-}
 
-#forms p {
-    flex-grow:1;
-    padding:10px;
-}
-
-#placename{
-    
-    background-color:#004777;
-    height: auto;
-   margin: auto;
-    display: block;
-    text-align: center;
-    width: 100%
-}
-
-#placename h2{
+#placeName h2{
     margin: 0px;
     color: black;
     padding:10px;
+    text-align: center;
 }
 
-#buttons{
+#buttons,
+#buttons a{
      display: flex;
    flex-flow:row;
-    width: 100%;
+    width: 90%;
     margin-top: 0px;
     height:4rem;
+    align-self: center;
 }
 
-#buttons button{
-     flex-grow:1;
+#buttons button,
+#buttons a {
+     flex-grow: 3;
      height:100%;
      border: 1px black;
 }
@@ -114,23 +104,36 @@ nav{
 }
 
 #tableDiv{
-    width: 75%;
+    width: 100%;
     height: auto;
     text-align: center;
     caption-side: top;
     padding: 0;
+    display:block;
    
     
 }
 
 #weatherDiv{
-    width:20%;
+    width:100%;
     text-align: center;
+    display:block;
 }
 
 #weatherDiv li{
     padding:20px;
     list-style-type: none;
+    line-height: 2rem;
+}
+
+.icon{
+    margin-bottom: 2rem;
+}
+
+#chartDiv{
+    width:100%;
+    overflow: hidden;
+    overflow-x: scroll;
 }
 
 #tideTable{
@@ -169,4 +172,59 @@ td {
 
 #pac-container{
     height: 100%;
+}
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { 
+        border: 1px solid #ccc; 
+    }
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	
+	td:nth-of-type(1):before { content: "Time"; }
+	td:nth-of-type(2):before { content: "Swell Direction"; }
+	td:nth-of-type(3):before { content: "Swell Height"; }
+	td:nth-of-type(4):before { content: "Swell Period"; }
+	td:nth-of-type(5):before { content: "Wind Direction"; }
+	td:nth-of-type(6):before { content: "Wind Speed"; }
+	td:nth-of-type(7):before { content: "Water Temperature"; }
+	td:nth-of-type(8):before { content: "Air Temperature"; }
+	td:nth-of-type(9):before { content: "Visibility"; }
+	td:nth-of-type(10):before { content: "Sea Level"; }
+}
+
+@media (min-width: 1024px){
+    #dropdown-button{
+        display: none;
+    }
 }

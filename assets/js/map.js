@@ -15,7 +15,7 @@ function initialize() {
     var lng = [];
   
        
-  
+ 
     
     
     //set parameters for api information we need
@@ -53,7 +53,7 @@ function initialize() {
               locations.push(nextLocation);
           }
           
-      
+          
     
     //initiate map
 function initMap(map) {
@@ -67,14 +67,16 @@ function initMap(map) {
      });
     
         for (i =0; i < locations.length; i++){
-            // var site = locations[x];
-            var location = new google.maps.LatLng(locations[i].lat, locations[i].lng);
-            addMarker(map, locations.label, location );
             
-            // var infoWindow = new google.maps.InfoWindow();  
-            //  infoWindow.open(map, marker);
+            var location = new google.maps.LatLng(locations[i].lat, locations[i].lng);
+            
+            addMarker(map, location );
+            
+            
   
             }
+            
+                          
              map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
             
               var autocomplete = new google.maps.places.Autocomplete(input);
@@ -159,6 +161,7 @@ $("#tableButton").click(function(){
       getMarineData(lat, lng);
        getWeatherData(lat,lng);
        getTideTimes(lat,lng);
+       $("#tideTable, thead").removeClass("hide");
       $("#results").removeClass("hide");
       $("#chartDiv").removeClass("hide")
 });       
@@ -174,18 +177,15 @@ $("#next24hours").click(function(){
       $("#chartDiv").removeClass("hide")
 });       
        
-//  $("#chart").click(function(){
-//         // call chart function     
-//      getTideTimes(lat,lng);
-//     $("#chartDiv").toggleClass("hide")
-// });
+
       
     
 
-function addMarker(map, label, location){
+function addMarker(map, location){
     var marker = new google.maps.Marker({
         position: location,
         map: map
+        
     });
     
      markers.push(marker);
@@ -209,11 +209,31 @@ hide("bridge");
 hide("ferry");
 
 
+function findLabel( x, y) {
+  for (var i = 0; i < locations.length; i++) {
+      if (locations[i].lat == x && locations[i].lng == y) {
+          return locations[i].label;
+      }
+  }
+  return null;
+} 
+
+
+
   
   marker.addListener('click', function(){
-            //   $("#placeName").html('<h2>' + locations[i].label + '</h2>')
-                lat = marker.position.lat();
-                lng = marker.position.lng();
+    
+              
+                lat = marker.position.lat().toFixed(6);
+                lng = marker.position.lng().toFixed(6);
+                
+                label = findLabel(lat, lng);
+                
+
+                 var infoWindow = new google.maps.InfoWindow();
+                 infoWindow.setContent(label)
+              infoWindow.open(label, marker);
+                $("#placeName").html('<h2>' + label  + '</h2>')
                  zoom(marker.getPosition());
                 if( count > -1){
                     count = 0;
@@ -331,7 +351,7 @@ function getMarineData (lat, lng){
 
 
                           });
-                        //   infoWindow.setContent(locations[i].label + locations[i].url);
+                          
                          
 
       
@@ -339,26 +359,24 @@ function getMarineData (lat, lng){
                           
     
                           };
-  
+                         
                
              initMap();
              }// success function close
         });//ajax close   
         
-        // $("#tableButton").click(function(){
-        //     $("#tableDiv").slideToggle(500)
-        // });
+       
         
       
             
      //request map markers on selection
        function show(category) {
         for (var i=0; i<markers.length; i++) {
-               console.log(locations[i].cat);
+              //  console.log(locations[i].cat);
           if (locations[i].cat === category) {
-               console.log('success!');
+              //  console.log('success!');
             markers[i].setVisible(true);
-            console.log(markers[i]);
+            // console.log(markers[i]);
           }
       }
    }     
