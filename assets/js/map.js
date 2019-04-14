@@ -1,3 +1,5 @@
+
+
 function initialize() {
     var markers = [];
     var locations = [];
@@ -14,9 +16,12 @@ function initialize() {
     var lat = [];
     var lng = [];
   
-       
+    $("#enterButton").click(function(){
+        console.log("clicked");
+        $("#landing-page").hide();
+        });
  
-    
+    // 
     
     //set parameters for api information we need
      const params = 'swellHeight,swellDirection,swellPeriod,windDirection,windSpeed,waterTemperature,airTemperature,visibility,seaLevel';
@@ -52,11 +57,17 @@ function initialize() {
               var nextLocation = data[i]
               locations.push(nextLocation);
           }
-          
-          
+         
+         
     
     //initiate map
 function initMap(map) {
+    $("#enterButton").click(function(){
+        pushCard();
+        
+    });
+
+    
     
     var map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 6,
@@ -77,8 +88,10 @@ function initMap(map) {
             }
             
                           
-             map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
-            
+             
+        function pushCard(){
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+        };
               var autocomplete = new google.maps.places.Autocomplete(input);
 
         // Bind the map's bounds (viewport) property to the autocomplete object,
@@ -101,6 +114,7 @@ function initMap(map) {
          markers.push(point);
 
         autocomplete.addListener('place_changed', function() {
+            $("#landing-page").hide();  
           infowindow.close();
           point.setVisible(false);
           var place = autocomplete.getPlace();
@@ -161,9 +175,11 @@ $("#tableButton").click(function(){
       getMarineData(lat, lng);
        getWeatherData(lat,lng);
        getTideTimes(lat,lng);
-       $("#tideTable, thead").removeClass("hide");
-      $("#results").removeClass("hide");
-      $("#chartDiv").removeClass("hide")
+       $(".hide").removeClass("hide");
+    //   $("#results").removeClass("hide");
+    //   $("#chartDiv").removeClass("hide");
+    //   $(".chartTitle").removeClass("hide");
+    //   $(".featurette-divider").removeClass("hide")
 });       
 
 $("#next24hours").click(function(){
@@ -222,7 +238,8 @@ function findLabel( x, y) {
 
   
   marker.addListener('click', function(){
-    
+                
+    $(".weatherButton").removeClass("hide");
               
                 lat = marker.position.lat().toFixed(6);
                 lng = marker.position.lng().toFixed(6);
@@ -284,7 +301,7 @@ function getMarineData (lat, lng){
                                                   var swellDirection = (get(['swellDirection', 0, 'value'], hours[i]));
                                                   var swellHeight = toFeet((get(['swellHeight', 0, 'value'], hours[i]))).toFixed(2);
                     
-                                                  var visibility = hours[i]['visibility'][0].value;
+                                                  var visibility = (get(['visibility',0,'value'],hours[i]));
                                                   var waterTemperature = (get(['waterTemperature', 0, 'value'], hours[i]));
                                                   var windDirection = (get(['windDirection', 0, 'value'], hours[i]));
                                                   var windSpeed = (get(['windSpeed', 0, 'value'], hours[i]));
@@ -361,7 +378,7 @@ function getMarineData (lat, lng){
                           };
                          
                
-             initMap();
+           initMap();
              }// success function close
         });//ajax close   
         
@@ -388,8 +405,11 @@ function getMarineData (lat, lng){
               }
         }
       }
+
+      
  
-    $(".checkbox").click(function(){
+    $(".checkbox").change(function(){
+       
         var cat = $(this).attr("value" );                                   
         if ( $(this).is(":checked", true)){
         show(cat);
@@ -496,7 +516,7 @@ function getMarineData (lat, lng){
                             
                             
                             
-                             $("#weatherDiv").html('<ul><li class="icon"><img src="'+ icon +'"></li><li>'+ condition +'</li><li>Sunrise: '+ sunrise +'</li><li>Sunset: '+ sunset +'</li><li>Precipitation: '+ precip +' mm</li><li>Humidity: '+ humidity +'</li>')
+                             $("#weatherDiv").html('<h2>Weather Forecast</h2><ul><li class="icon"><img src="'+ icon +'"></li><li>'+ condition +'</li><li>Sunrise: '+ sunrise +'</li><li>Sunset: '+ sunset +'</li><li>Precipitation: '+ precip +' mm</li><li>Humidity: '+ humidity +'</li>')
                          });
 
                     } 

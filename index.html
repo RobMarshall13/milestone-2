@@ -12,6 +12,7 @@
 
  
 <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,20 +27,44 @@
 </head>
 
 <body onload="initialize()">
-		
- <container  id="main">
+		<div id="landing-page">
+			<div class="jumbotron jumbotron-fluid  col-xs-12 col-md-6 offset-md-3 my-auto" >
+				<h1 id="title">c-SURE</h1>
+
+				<hr id="jt-divider" class="featurette-divider ">
+                <p>Use the interactive map to find information you need to keep safe on the water this summer.</p>
+                <p>Simply</p>
+					<div class="pac-card" id="pac-card">
+                            <div id="pac-container">
+                                <input id="pac-input" type="text" placeholder="Enter Your Destination">
+                            </div>
+                        </div>
+                        
+                        <div id="infowindow-content">
+                            <img src="" width="16" height="16" id="place-icon">
+                            <span id="place-name" class="title"></span><br>
+                            <span id="place-address"></span>
+						</div>
+						<p>or</p>
+			   <button id="enterButton" class="btn btn-lg btn-primary">Go Straight To The Map</button>
+			   <p class="jt-bottom">To find features such as lifeguard locations, weather and marine forecasts and important landmarks.</p>
+			</div>
+            </div>
+			   <container  id="main">
+				   <header></header>
            
+			  
+		   
 				<div id="map-canvas"></div>
 				<nav class="navbar navbar-expand-lg ">
 					
 						<button id="dropdown-button" class="  btn btn-lg btn-block btn-primary dropdown-toggle" type="button" data-toggle="collapse" data-target="#forms" aria-controls="forms" aria-expanded="false" aria-label="Toggle navigation">
 								Click Me
 							</button>
-							<ul class="justify-content-center nav-fill collapse navbar-collapse" id="forms">
-				  
-							
-		
-						<li class="nav-item nav-link">
+
+           
+				<ul class="justify-content-center nav-fill collapse navbar-collapse" id="forms">
+					<li class="nav-item nav-link">
 								
 						<input class="checkbox"  name="lifeGuard" type="checkbox" value="lifeGuard" />
 					
@@ -95,14 +120,14 @@
 					</li>
 						<li class="nav-item">
 					
-						<input class="checkbox"  name="inlet" type="checkbox" value="inlet" />
+						<input  class=" checkbox"  name="inlet" type="checkbox" value="inlet"  />
 					
 						<label for="inlet">Inlets</label>
 					
 					</li>
 						<li class="nav-item">
 					
-						<input class="checkbox"  name="bridge" type="checkbox" value="bridge" />
+						<input class=" checkbox"  name="bridge" type="checkbox" value="bridge" />
 					
 						<label for="bridge">Bridges</label>
 					
@@ -119,38 +144,36 @@
 				
 			
 		</nav>
+
+		
+<div id="logo">
+	<H1>C-Sure</H1>
+</div>
                     
-                          <div id="placeName">
+                          <div id="placeName" class="hide">
                     <h2></h2>
                 
-                 </div>
-                <div id="buttons">
+				 </div>
+				 
+				 
+                <div id="buttons" class="hide">
                     
-						<button  id="past24hours"><< Past 24 Hours</button>
-						<a href="#chartDiv"><button  id="tableButton">Weather Info</button></a>
-		                <button  id="next24hours">Next 24 Hours>></button>
+						<button class="weatherButton hide disabled" id="past24hours"><< Past 24 Hours</button>
+						<a class="weatherButton hide" href="#chartDiv"><button class="weatherButton"  id="tableButton">Marine And Weather Info</button></a>
+		                <button class="weatherButton hide" id="next24hours">Next 24 Hours>></button>
                 </div>
-                        <div class="pac-card" id="pac-card">
-                            <div id="pac-container">
-                                <input id="pac-input" type="text" placeholder="Enter a location">
-                            </div>
-                        </div>
-                        
-                        <div id="infowindow-content">
-                            <img src="" width="16" height="16" id="place-icon">
-                            <span id="place-name" class="title"></span><br>
-                            <span id="place-address"></span>
-                        </div>
+                       
                    
                 
               
     </container>
-    
+    <hr class="featurette-divider hide">
     <container id="results" class="hide">
        
        
         <div id="tableDiv" class="container">
             <table id='tideTable'>
+				<h1 id="marineTitle" class="hide">Marine Forecast<h1>
         		<thead class="hide">
         			<tr>
         				<th>Time</th>
@@ -171,9 +194,18 @@
        
        
 	 </container>
-	 <div id="weatherDiv" class="container"></div>
-      <div id="chartDiv" class="hide container"></div>
-
+	 <hr class="featurette-divider hide">
+	 <div id="weatherDiv" class="container hide">
+		
+	 </div>
+	 <hr class="featurette-divider hide">
+	 <div class="chartTitle hide container">
+	   <h1 >Tide Times</h1>
+	</div>
+      <div id="chartDiv" class="hide container">
+		 
+	  </div>
+	
 
 <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
 <!--<script type="text/javascript" src="/assets/life-guarded-beaches.js"></script>-->
