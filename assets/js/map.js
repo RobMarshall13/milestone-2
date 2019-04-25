@@ -15,7 +15,7 @@ function initialize() {
     var lng = [];
 
     $("#enterButton").click(function () {
-        console.log("clicked");
+       
         $("#landing-page").hide();
     });
 
@@ -102,6 +102,7 @@ function initialize() {
                 // Bind the map's bounds (viewport) property to the autocomplete object,
                 // so that the autocomplete requests use the current map bounds for the
                 // bounds option in the request.
+                
                 autocomplete.bindTo('bounds', map);
 
                 // Set the data fields to return when the user selects a place.
@@ -159,7 +160,7 @@ function initialize() {
 
 
                 autocomplete.setOptions({
-                    strictBounds: true
+                    strictBounds: false
                 });
 
 
@@ -173,50 +174,56 @@ function initialize() {
                 count -= 1;
                 counter -= 1;
                 console.log(count);
-                if ((count < 0 || counter < 0) || (count > 4 || counter > 4)) {
-                    alert("there is no information available at this time")
+                
+                 if (count < 0 || counter < 0){
+                    noData();
+                    alert("We cannot provide historical data");
+                    
                 } else {
-                    getMarineData(lat, lng);
-                    getWeatherData(lat, lng);
+                    getNextData();
+                    $("#marineTitle").html('<h1>Marine Forecast</h1>');
                 }
             });
 
-            $("#tableButton").click(function () {
+            function showInfo() {
                 count += 1;
                 counter += 1;
-                if ((count < 0 || counter < 0) || (count > 4 || counter > 4)) {
-                    alert("there is no information available at this time")
-                } else {
-                    console.log(count);
-                    getMarineData(lat, lng);
-                    getWeatherData(lat, lng);
-                    getTideTimes(lat, lng);
-                    $(".hide").removeClass("hide");
-                    //   $("#results").removeClass("hide");
-                    //   $("#chartDiv").removeClass("hide");
-                    //   $(".chartTitle").removeClass("hide");
-                    //   $(".featurette-divider").removeClass("hide")
-                }
-            });
+                
+                getNextData();
+                
+                };
+            
 
             $("#next24hours").click(function () {
                 count += 1;
                 counter += 1;
                 console.log(count);
-                if ((count < 0 || counter < 0) || (count > 3 || counter > 3)) {
-
-                    $("#weatherDiv").html('<h2>No Information</h2>');
+                if  (count > 3 || counter > 3) {
+                    noData();
+                    alert("there is no information available at this time")
+                    
                 } else {
-                    getMarineData(lat, lng);
-                    getWeatherData(lat, lng);
-                    getTideTimes(lat, lng);
-                    $("#results").removeClass("hide");
-                    $("#chartDiv").removeClass("hide");
+                    getNextData();
+                    
+                    
                 }
             });
 
+            function getNextData(){
+                $(".no-info").addClass("hidden");
+                $(".hide").removeClass("hide");
+                $("#marineTitle").html('<h1>Marine Forecast</h1>');
+                getMarineData(lat, lng);
+                getWeatherData(lat, lng);
+                getTideTimes(lat, lng);
+                
+            }
 
-
+            function noData(){
+                $("#marineTitle").html('<h2 class="no-info">No Information</h2>');
+                $("#weatherDiv").html('<h2 class="no-info">No Information</h2>');
+                $("#chartDiv").html('<h2 class="no-info">No Information</h2>');
+            }
 
 
             function addMarker(map, location) {
@@ -283,7 +290,7 @@ function initialize() {
 
 
                 marker.addListener('click', function () {
-
+                   showInfo();
                     $(".weatherButton").removeClass("hide");
 
                     lat = marker.position.lat().toFixed(6);
@@ -309,8 +316,8 @@ function initialize() {
             function getMarineData(lat, lng) {
                 fetch(`https://api.stormglass.io/point?lat=${lat}&lng=${lng}&params=${params}`, {
                     headers: {
-                        //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                        'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                        'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+                        //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
                         // 'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                     }
 
@@ -466,6 +473,7 @@ function initialize() {
 
     // make tide chart
     function getTideTimes(lat, lon) {
+        $("#chartDiv").html('<div id="chartTitle" class="container"><h2>Tide Times</h2></div>');
         d3.select("#chartDiv").select("svg").remove();
         const svg = d3.select('#chartDiv')
             .append('svg')
