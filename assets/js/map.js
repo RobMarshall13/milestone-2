@@ -369,8 +369,9 @@ function initialize() {
 
 
 
-
+                        $("#tideTable").html('<h1 id="marineTitle" >Marine Forecast<h1><thead id="thead" ><tr><th>Time</th><th>Swell<br> Direction</th><th>Swell<br> Height</th><th>Swell<br> Period</th><th>Wind<br> Direction</th><th>Wind<br> Speed</th><th>Water <br>Temperature</th><th>Air<br> Temperature</th><th>Visibility</th><th>Sea <br>Level</th></tr></thead>');
                         // build the table from the retrieved data
+                       
                         htmlString += '<tr  class="animatedParent" data-sequence="1000">';
                         htmlString += '<td>' + convertedDate + '\n' + convertedTime + '</td>';
                         htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgId + '"><p>' + swellDirection + '&deg;' + 'C </p>' + '</td>';

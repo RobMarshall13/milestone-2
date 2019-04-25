@@ -2,218 +2,195 @@
 <html>
 
 <head>
-	
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<meta charset="utf-8">
 	<title>milestone-2</title>
 
 
 
- 
-<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+		integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+		</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+		</script>
 
 
 
-	<style>
-	</style>
+	
 </head>
 
 <body onload="initialize()">
-		<div id="landing-page">
-			<div class="jumbotron jumbotron-fluid  col-xs-12 col-md-6 offset-md-3 my-auto" >
-				<h1 id="title">c-SURE</h1>
+	<div id="landing-page">
+		<div class="jumbotron jumbotron-fluid  col-xs-12 col-md-6 offset-md-3 my-auto">
+			<h1 id="title">c-SURE</h1>
 
-				<hr id="jt-divider" class="featurette-divider ">
-                <p>Use the interactive map to find information you need to keep safe on the water this summer.</p>
-                <p>Simply</p>
-					<div class="pac-card" id="pac-card">
-                            <div id="pac-container">
-                                <input id="pac-input" type="text" placeholder="Search For Your Destination">
-                            </div>
-                        </div>
-                        
-                        <div id="infowindow-content">
-                            
-                            <span id="place-name" class="title"></span><br>
-                            <span id="place-address"></span>
-						</div>
-						<p>or</p>
-			   <button id="enterButton" class="btn btn-lg btn-primary">Go Straight To The Map</button>
-			   <p class="jt-bottom">To find features such as lifeguard locations, weather and marine forecasts and important landmarks.</p>
+			<hr id="jt-divider" class="featurette-divider ">
+			<p>Use the interactive map to find information you need to keep safe on the water this summer.</p>
+			<p>Simply</p>
+			<div class="pac-card" id="pac-card">
+				<div id="pac-container">
+					<input id="pac-input" type="text" placeholder="Search For Your Destination">
+				</div>
 			</div>
-            </div>
-			   <div   id="main">
-				   <header id="logo">
-					
-						<H1>C-Sure</H1>
-					
-				   </header>
-           
-			  
-		   
-				<div id="map-canvas"></div>
-				<nav class="navbar navbar-expand-lg ">
-					
-						<button id="dropdown-button" class="btn btn-lg btn-block btn-primary dropdown-toggle" type="button" data-toggle="collapse" data-target="#forms" aria-controls="forms" aria-expanded="false" aria-label="Toggle navigation">
-								Click Me
-							</button>
 
-           
-				<ul class="justify-content-center nav-fill collapse navbar-collapse" id="forms">
-					<li class="nav-item nav-link">
-								
-						<input class="checkbox"  name="lifeGuard" type="checkbox" value="lifeGuard" />
-					
-						<label for="lifeGuard">Life Guarded Beaches</label>
-					
-					</li>
-					
-						<li class="nav-item">
-					
-						<input class="checkbox"  name="lifeBoat" type="checkbox" value="lifeBoat" />
-					
-						<label for="lifeBoat">Life Boat Stations</label>
-					
-					</li>
-					
-					   
-						<li class="nav-item">
-					
-						<input class="checkbox"  name="marina" type="checkbox" value="marina" />
-					
-						<label for="marina">Marinas</label>
-					
-					</li>
-						<li class="nav-item">
-					
-						<input class="checkbox"  name="harbor" type="checkbox" value="harbor" />
-					
-						<label for="harbor">Harbours</label>
-					
-					</li>
-						<li class="nav-item">
-					
-						<input class="checkbox"  name="lighthouse" type="checkbox" value="lighthouse" />
-					
-						<label for="lighthouse">lighthouses</label>
-					
-					</li>
-		
-				 
-						<li class="nav-item">
-		
-						<input class="checkbox"  name="lock" type="checkbox" value="lock" />
-					
-						<label for="lock">Locks</label>
-					
-					</li>
-						<li class="nav-item">
-					
-						<input class="checkbox"  name="landmark" type="checkbox" value="landmark" />
-					
-						<label for="landmark">Landmarks</label>
-					
-					</li>
-						<li class="nav-item">
-					
-						<input  class=" checkbox"  name="inlet" type="checkbox" value="inlet"  />
-					
-						<label for="inlet">Inlets</label>
-					
-					</li>
-						<li class="nav-item">
-					
-						<input class=" checkbox"  name="bridge" type="checkbox" value="bridge" />
-					
-						<label for="bridge">Bridges</label>
-					
-					</li>
-						<li class="nav-item">
-					
-						<input class="checkbox"  name="ferry" type="checkbox" value="ferry" />
-					
-						<label for="ferry">Ferries</label>
-					
-						</li>
-				   
-					</ul>
-				
-			
+			<div id="infowindow-content">
+
+				<span id="place-name" class="title"></span><br>
+				<span id="place-address"></span>
+			</div>
+			<p>or</p>
+			<button id="enterButton" class="btn btn-lg btn-primary">Go Straight To The Map</button>
+			<p class="jt-bottom">To find features such as lifeguard locations, weather and marine forecasts and
+				important landmarks.</p>
+		</div>
+
+	</div>
+	<div id="main">
+		<header id="logo">
+			<H1>C-Sure</H1>
+		</header>
+
+
+
+		<div id="map-canvas"></div>
+		<nav class="navbar navbar-expand-lg ">
+
+			<button id="dropdown-button" class="btn btn-lg btn-block btn-primary dropdown-toggle" type="button"
+				data-toggle="collapse" data-target="#forms" aria-controls="forms" aria-expanded="false"
+				aria-label="Toggle navigation">
+				Click Me
+			</button>
+
+
+			<ul class="justify-content-center nav-fill collapse navbar-collapse" id="forms">
+				<li class="nav-item nav-link">
+
+					<input class="checkbox" name="lifeGuard" type="checkbox" value="lifeGuard" />
+
+					<label for="lifeGuard">Life Guarded Beaches</label>
+
+				</li>
+
+				<li class="nav-item">
+
+					<input class="checkbox" name="lifeBoat" type="checkbox" value="lifeBoat" />
+
+					<label for="lifeBoat">Life Boat Stations</label>
+
+				</li>
+
+
+				<li class="nav-item">
+
+					<input class="checkbox" name="marina" type="checkbox" value="marina" />
+
+					<label for="marina">Marinas</label>
+
+				</li>
+				<li class="nav-item">
+
+					<input class="checkbox" name="harbor" type="checkbox" value="harbor" />
+
+					<label for="harbor">Harbours</label>
+
+				</li>
+				<li class="nav-item">
+
+					<input class="checkbox" name="lighthouse" type="checkbox" value="lighthouse" />
+
+					<label for="lighthouse">lighthouses</label>
+
+				</li>
+
+
+				<li class="nav-item">
+
+					<input class="checkbox" name="lock" type="checkbox" value="lock" />
+
+					<label for="lock">Locks</label>
+
+				</li>
+				<li class="nav-item">
+
+					<input class="checkbox" name="landmark" type="checkbox" value="landmark" />
+
+					<label for="landmark">Landmarks</label>
+
+				</li>
+				<li class="nav-item">
+
+					<input class=" checkbox" name="inlet" type="checkbox" value="inlet" />
+
+					<label for="inlet">Inlets</label>
+
+				</li>
+				<li class="nav-item">
+
+					<input class=" checkbox" name="bridge" type="checkbox" value="bridge" />
+
+					<label for="bridge">Bridges</label>
+
+				</li>
+				<li class="nav-item">
+
+					<input class="checkbox" name="ferry" type="checkbox" value="ferry" />
+
+					<label for="ferry">Ferries</label>
+
+				</li>
+
+			</ul>
 		</nav>
-
-		
-
-                    
-                          
-                   
-                
-				 
-				 
-				 
-               
-                       
-                   
-                
-              
 	</div>
-	
+
 	<div id="buttons" class="container  hide ">
-        <div class="row">          
-		<button class="weatherButton hide col-sm  " id="past24hours"><< Past 24 Hours</button>
-		 <h1 id="placeName" class="hide col-sm "></h1>
-		<button class="weatherButton hide col-sm " id="next24hours">Next 24 Hours>></button>
-	</div> 
-</div>
-    <hr class="featurette-divider hide">
-    <div id="results" class="container hide">
-       
-       
-        <div id="tableDiv" class="container">
-            <table id='tideTable'>
-				<caption id="marineTitle" class="hide">Marine Forecast<caption>
-        		<thead id="thead" class="hide">
-        			<tr>
-        				<th>Time</th>
-        				<th>Swell<br> Direction</th>
-        				<th>Swell<br> Height</th>
-        				<th>Swell<br> Period</th>
-        				<th>Wind<br> Direction</th>
-        				<th>Wind<br> Speed</th>
-        				<th>Water <br>Temperature</th>
-        				<th>Air<br> Temperature</th>
-        				<th>Visibility</th>
-        				<th>Sea <br>Level</th>
-        			</tr>
-        		</thead>
-	        </table>
-	         
-        </div>
-       
-       
+		<div class="row">
+			<button class="btn-lg btn-primary hide col-sm  " id="past24hours">
+				<< Past 24 Hours</button> <h1 id="placeName" class="hide col-sm ">
+					</h1>
+					<button class="btn-lg btn-primary hide col-sm " id="next24hours">Next 24 Hours>></button>
+		</div>
 	</div>
-	 <hr class="featurette-divider hide">
-	 <div id="weatherDiv" class="container hide">
-		
-	 </div>
-	 <hr class="featurette-divider hide">
-	 
-      <div id="chartDiv" class="container hide">
-		 
-	  </div>
-	
 
-<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
-<!--<script type="text/javascript" src="/assets/life-guarded-beaches.js"></script>-->
-<script type="text/javascript" src="assets/js/map.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoLj_zJBGs9T6bUycUSRT6JVBVyszjf5o&libraries=places&callback=initMap"></script>
+	<hr class="featurette-divider hide">
+
+	<div id="results" class="container hide">
+		<div id="tableDiv" class="container">
+			<table id='tideTable'></table>
+		</div>
+	</div>
+
+	<hr class="featurette-divider hide">
+
+	<div id="weatherDiv" class="container hide"></div>
+
+
+	<hr class="featurette-divider hide">
+
+	<div id="chartDiv" class="container hide"></div>
+
+
+
+
+	<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
+	<!--<script type="text/javascript" src="/assets/life-guarded-beaches.js"></script>-->
+	<script type="text/javascript" src="assets/js/map.js"></script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoLj_zJBGs9T6bUycUSRT6JVBVyszjf5o&libraries=places&callback=initMap">
+		</script>
 
 
 </body>
