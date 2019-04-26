@@ -6,13 +6,15 @@ function initialize() {
     var htmlString;
 
 
-
+    var width =  width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     var iconSrc = {};
-
+    var cardCount = 0;
     var count = -1; //counter for click function that get marine info
     var counter = -1; // counter for function that gets weather info
     var lat = [];
     var lng = [];
+
+    
 
     $("#enterButton").click(function () {
 
@@ -65,18 +67,14 @@ function initialize() {
             //initiate map
             function initMap(map) {
                 $("#enterButton").click(function () {
-                    pushCard();
+                    
+                    pushCard(1, width);
 
                 });
 
                 
 
-                // $('#pacInput').keypress(function(event){
-                //     var keycode = (event.keyCode ? event.keyCode : event.which);
-                //     if(keycode == '13'){
-                //         alert('You pressed a "enter" key in textbox'); 
-                //     }
-                // });
+                
 
 
 
@@ -101,11 +99,19 @@ function initialize() {
 
                 }
 
+                
+                
 
 
                 function pushCard() {
-                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
-                };
+                    
+                    if (width >760 && cardCount <= 1){
+                        map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);  
+                    }else if(width < 760 && cardCount <= 1 ){
+                        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(card);  
+                }else{}};
+
+
                 var options = {
                     types: ['(cities)'],
                     componentRestrictions: {country: 'uk'}
@@ -136,6 +142,7 @@ function initialize() {
                 markers.push(point);
 
                 autocomplete.addListener('place_changed', function () {
+                    cardCount +=1
                     pushCard();
                     infowindow.close();
                     point.setVisible(false);
@@ -176,7 +183,7 @@ function initialize() {
 
 
                 autocomplete.setOptions({
-                    strictBounds: true
+                    strictBounds: false
                 });
 
 

@@ -7,24 +7,44 @@ body{
    
 }
 
+#carousel{
+    max-height:650px;
+    width:100vw;
+    overflow: hidden;
+    position: relative;
+    margin-top:3rem;
+    background-color: transparent;
+    
+}
+
+
 #landing-page{
     height: 100vh;
     width:100vw;
     z-index:5;
-    background: url(/assets/css/image/map.png) no-repeat center center fixed; 
+    background-color: white;
+    /* background: url(/assets/css/image/map.png) no-repeat center center fixed;  */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; 
     /* background-color:rgba(0,0,0,0.5); */
     position: absolute;
-    display:flex;
+    top:0;
+    left:0;
+   
    
 }
 
+
 .jumbotron{
-max-height:800px;
+
 text-align: center;
+
+}
+
+#jumbo{
+    background: transparent;
 }
 
 .jt-bottom{
@@ -38,30 +58,32 @@ z-index: 5;
 
 
 header{
+   
     height:80px;
     background-color: #004777;
-    
+    z-index:2;
 }
 
 #main{
     
     height: 100vh;
     width:99vw;
-    display: flex;
-    flex-flow: column nowrap;
+    /*  */
        
 }
 
 #logo{
-    margin-top:1rem;
+    padding:1rem;
     background-color: #004777;
     color: white;
     text-align: center;
+    
    
 }
 
 #refresh{
     float: right;
+    margin-right:1rem;
 }
 
 nav li{
