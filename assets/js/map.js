@@ -6,7 +6,7 @@ function initialize() {
     var htmlString;
 
 
-  
+
     var iconSrc = {};
 
     var count = -1; //counter for click function that get marine info
@@ -15,7 +15,7 @@ function initialize() {
     var lng = [];
 
     $("#enterButton").click(function () {
-       
+
         $("#landing-page").hide();
     });
 
@@ -39,15 +39,15 @@ function initialize() {
             }).animate({
                 deg: angle
             }, {
-                duration: duration,
-                easing: easing,
-                step: function (now) {
-                    $elem.css({
-                        transform: 'rotate(' + now + 'deg)'
-                    });
-                },
-                complete: complete || $.noop
-            });
+                    duration: duration,
+                    easing: easing,
+                    step: function (now) {
+                        $elem.css({
+                            transform: 'rotate(' + now + 'deg)'
+                        });
+                    },
+                    complete: complete || $.noop
+                });
         });
     };
 
@@ -68,6 +68,15 @@ function initialize() {
                     pushCard();
 
                 });
+
+                
+
+                // $('#pacInput').keypress(function(event){
+                //     var keycode = (event.keyCode ? event.keyCode : event.which);
+                //     if(keycode == '13'){
+                //         alert('You pressed a "enter" key in textbox'); 
+                //     }
+                // });
 
 
 
@@ -97,12 +106,19 @@ function initialize() {
                 function pushCard() {
                     map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
                 };
-                var autocomplete = new google.maps.places.Autocomplete(input);
+                var options = {
+                    types: ['(cities)'],
+                    componentRestrictions: {country: 'uk'}
+                  };
+               
+                var autocomplete = new google.maps.places.Autocomplete(input,options);
 
                 // Bind the map's bounds (viewport) property to the autocomplete object,
                 // so that the autocomplete requests use the current map bounds for the
                 // bounds option in the request.
-                
+                var bounds = new google.maps.LatLngBounds(
+                    new google.maps.LatLng(49.383639452689664, -17.39866406249996),
+                    new google.maps.LatLng(59.53530451232491, 8.968523437500039));
                 autocomplete.bindTo('bounds', map);
 
                 // Set the data fields to return when the user selects a place.
@@ -120,19 +136,19 @@ function initialize() {
                 markers.push(point);
 
                 autocomplete.addListener('place_changed', function () {
-
+                    pushCard();
                     infowindow.close();
                     point.setVisible(false);
                     var place = autocomplete.getPlace();
                     if (!place.geometry) {
                         // User entered the name of a Place that was not suggested and
                         // pressed the Enter key, or the Place Details request failed.
-                        window.alert("No details available for input: '" + place.name + "'");
+                        window.alert("No details available for input: '" + place.name + "' please choose a uk destination");
                         return;
                     }
 
                     // If the place has a geometry, then present it on a map.
-                    if (place.geometry.viewport) {
+                    if (place.geometry) {
                         $("#landing-page").hide();
                         map.fitBounds(place.geometry.viewport);
                     } else {
@@ -160,7 +176,7 @@ function initialize() {
 
 
                 autocomplete.setOptions({
-                    strictBounds: false
+                    strictBounds: true
                 });
 
 
@@ -174,11 +190,11 @@ function initialize() {
                 count -= 1;
                 counter -= 1;
                 console.log(count);
-                
-                 if (count < 0 || counter < 0){
+
+                if (count < 0 || counter < 0) {
                     noData();
                     alert("We cannot provide historical data");
-                    
+
                 } else {
                     getNextData();
                     $("#marineTitle").html('<h1>Marine Forecast</h1>');
@@ -188,38 +204,38 @@ function initialize() {
             function showInfo() {
                 count += 1;
                 counter += 1;
-                
+
                 getNextData();
-                
-                };
-            
+
+            };
+
 
             $("#next24hours").click(function () {
                 count += 1;
                 counter += 1;
                 console.log(count);
-                if  (count > 3 || counter > 3) {
+                if (count > 3 || counter > 3) {
                     noData();
                     alert("there is no information available at this time")
-                    
+
                 } else {
                     getNextData();
-                    
-                    
+
+
                 }
             });
 
-            function getNextData(){
+            function getNextData() {
                 $(".no-info").addClass("hidden");
                 $(".hide").removeClass("hide");
                 $("#marineTitle").html('<h1>Marine Forecast</h1>');
                 getMarineData(lat, lng);
                 getWeatherData(lat, lng);
                 getTideTimes(lat, lng);
-                
+
             }
 
-            function noData(){
+            function noData() {
                 $("#marineTitle").html('<h2 class="no-info">No Information</h2>');
                 $("#weatherDiv").html('<h2 class="no-info">No Information</h2>');
                 $("#chartDiv").html('<h2 class="no-info">No Information</h2>');
@@ -290,7 +306,7 @@ function initialize() {
 
 
                 marker.addListener('click', function () {
-                   showInfo();
+                    showInfo();
                     $(".weatherButton").removeClass("hide");
 
                     lat = marker.position.lat().toFixed(6);
@@ -318,7 +334,7 @@ function initialize() {
                     headers: {
                         //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
                         //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                         'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+                        'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                     }
 
                 }).then(function gotData(response) {
@@ -369,9 +385,9 @@ function initialize() {
 
 
 
-                        $("#tideTable").html('<h1 id="marineTitle" >Marine Forecast<h1><thead id="thead" ><tr><th>Time</th><th>Swell<br> Direction</th><th>Swell<br> Height</th><th>Swell<br> Period</th><th>Wind<br> Direction</th><th>Wind<br> Speed</th><th>Water <br>Temperature</th><th>Air<br> Temperature</th><th>Visibility</th><th>Sea <br>Level</th></tr></thead>');
+                        $("#tideTable").html('<h1 id="marineTitle">Marine Forecast<h1><thead id="thead" ><tr><th>Time</th><th>Swell<br> Direction</th><th>Swell<br> Height</th><th>Swell<br> Period</th><th>Wind<br> Direction</th><th>Wind<br> Speed</th><th>Water <br>Temperature</th><th>Air<br> Temperature</th><th>Visibility</th><th>Sea <br>Level</th></tr></thead>');
                         // build the table from the retrieved data
-                       
+
                         htmlString += '<tr  class="animatedParent" data-sequence="1000">';
                         htmlString += '<td>' + convertedDate + '\n' + convertedTime + '</td>';
                         htmlString += '<td>' + '<img src="assets/images/if_Forward-64_32079.1.png"' + ' id="' + imgId + '"><p>' + swellDirection + '&deg;' + 'C </p>' + '</td>';
@@ -440,7 +456,7 @@ function initialize() {
 
     //request map markers on selection
     function show(category) {
-        for (var i = 0; i < markers.length-1; i++) {
+        for (var i = 0; i < markers.length - 1; i++) {
             //  console.log(locations[i].cat);
             if (locations[i].cat === category) {
                 //  console.log('success!');

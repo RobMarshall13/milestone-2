@@ -38,9 +38,9 @@ z-index: 5;
 
 
 header{
-    height:60px;
+    height:80px;
     background-color: #004777;
-    text-align: center;
+    
 }
 
 #main{
@@ -53,9 +53,15 @@ header{
 }
 
 #logo{
+    margin-top:1rem;
+    background-color: #004777;
     color: white;
     text-align: center;
    
+}
+
+#refresh{
+    float: right;
 }
 
 nav li{
@@ -107,6 +113,8 @@ nav{
     position: sticky;
     top: 20px;
 }
+
+
 
 
 
