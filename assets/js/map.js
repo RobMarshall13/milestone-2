@@ -5,7 +5,9 @@ function initialize() {
     var hours;
     var htmlString;
 
-
+    
+    
+  
     var width =  width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     var iconSrc = {};
     var cardCount = 0;
@@ -27,6 +29,8 @@ function initialize() {
     function toFeet(meter) {
         return meter * 3.28;
     }
+
+    
 
     // function for adding dynamically positioned images in the table
     $.fn.animateRotate = function (angle, duration, easing, complete) {
@@ -276,7 +280,7 @@ function initialize() {
                 var marker = new google.maps.Marker({
                     position: location,
                     map: map
-
+                    
                 });
 
                 markers.push(marker);
@@ -317,36 +321,34 @@ function initialize() {
                     lng = marker.position.lng().toFixed(6);
 
                     label = findLabel(lat, lng);
+                   
 
 
-
-                    infoWindow.setContent(label)
+                    infoWindow.setContent(label + '<br><a id="weatherButton" class="btn btn-sm btn-primary">Weather Info</a>')
                     infoWindow.open(label, marker);
-
-
-
-
+                  
+                  
                 });
 
+                
                 marker.addListener('mouseout', function () {
-                    infoWindow.close();
+                    setTimeout(function(){infoWindow.close()},4000);
+                })
+            
+               
+                google.maps.event.addListener(infoWindow, 'domready', function() {
+                    $("#weatherButton").click(function() {
+                       weatherButtonClicked();
+                    });
                 });
 
 
-
-
-                marker.addListener('click', function () {
+               
+                function weatherButtonClicked() {
                     showInfo();
-                    $(".weatherButton").removeClass("hide");
-
                     lat = marker.position.lat().toFixed(6);
                     lng = marker.position.lng().toFixed(6);
                     label = findLabel(lat, lng);
-
-
-
-                    infoWindow.setContent(label)
-                    infoWindow.open(label, marker);
                     $("#placeName").removeClass("hide").html('<h2>' + label + '</h2>')
                     zoom(marker.getPosition());
                     if (count > -1) {
@@ -355,15 +357,15 @@ function initialize() {
                         getMarineData(lat, lng);
                         getWeatherData(lat, lng);
                     }
-                });
+                };
 
             } //addMarker close
 
             function getMarineData(lat, lng) {
                 fetch(`https://api.stormglass.io/point?lat=${lat}&lng=${lng}&params=${params}`, {
                     headers: {
-                        //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                        'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                        'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
+                        //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
                         //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                     }
 
@@ -504,10 +506,7 @@ function initialize() {
         }
     }
 
-    // $('#myjpg').click(function() {
-    //     $(.checkbox).trigger('change');
-    //     $('#myjpg').html('blah blah it's clicked now');
-    // });
+  
 
 
     $(".checkbox").change(function () {
