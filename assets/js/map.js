@@ -16,10 +16,7 @@ function initialize() {
 
     
 
-    $("#enterButton").click(function () {
-
-        $("#landing-page").hide();
-    });
+   
 
     // 
 
@@ -53,6 +50,18 @@ function initialize() {
         });
     };
 
+   
+   
+    function highlightFor(){
+        
+        var element = document.getElementsByClassName('pac-container')[0];
+        element.style.backgroundColor = element.style.backgroundColor == "white" ? "lightblue" : "white";    
+        
+        }
+
+        
+    
+
     $.ajax({
         url: "assets/life-guarded-beaches.json",
         dataType: "json",
@@ -66,12 +75,13 @@ function initialize() {
 
             //initiate map
             function initMap(map) {
+               
                 $("#enterButton").click(function () {
-                    
-                    pushCard(1, width);
-
+                    cardCount +=1;
+                    $("#landingPage").hide();
+                    $(window).scrollTop(0);
+                    pushCard();
                 });
-
                 
 
                 
@@ -142,21 +152,33 @@ function initialize() {
                 markers.push(point);
 
                 autocomplete.addListener('place_changed', function () {
-                    cardCount +=1
-                    pushCard();
+                    
                     infowindow.close();
                     point.setVisible(false);
                     var place = autocomplete.getPlace();
                     if (!place.geometry) {
                         // User entered the name of a Place that was not suggested and
                         // pressed the Enter key, or the Place Details request failed.
-                        window.alert("No details available for input: '" + place.name + "' please choose a uk destination");
+                        window.alert("No details available for input: '" + place.name + "' please select a destination from the drop down menu.");
+                        //highlight the autocomplete results
+                        var highlight = setInterval(highlightFor, 200);                   
+                        function myStopFunction() {
+                            clearInterval(highlight);
+                          }
+                          setTimeout(function(){
+                              myStopFunction();
+
+                          }, 1500);
                         return;
                     }
 
                     // If the place has a geometry, then present it on a map.
                     if (place.geometry) {
-                        $("#landing-page").hide();
+                        cardCount +=1
+                   
+                    pushCard();
+                        $("#landingPage").hide();
+                        $(window).scrollTop(0);
                         map.fitBounds(place.geometry.viewport);
                     } else {
 
@@ -235,7 +257,7 @@ function initialize() {
             function getNextData() {
                 $(".no-info").addClass("hidden");
                 $(".hide").removeClass("hide");
-                $("#marineTitle").html('<h1>Marine Forecast</h1>');
+                
                 getMarineData(lat, lng);
                 getWeatherData(lat, lng);
                 getTideTimes(lat, lng);
@@ -246,6 +268,7 @@ function initialize() {
                 $("#marineTitle").html('<h2 class="no-info">No Information</h2>');
                 $("#weatherDiv").html('<h2 class="no-info">No Information</h2>');
                 $("#chartDiv").html('<h2 class="no-info">No Information</h2>');
+                $('#tideTable tr').children().remove();
             }
 
 
@@ -340,8 +363,8 @@ function initialize() {
                 fetch(`https://api.stormglass.io/point?lat=${lat}&lng=${lng}&params=${params}`, {
                     headers: {
                         //'Authorization': '9314edd6-c0d9-11e8-9f7a-0242ac130004-9314eee4-c0d9-11e8-9f7a-0242ac130004'
-                        //'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
-                        'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
+                        'Authorization': '7efc5c42-c57c-11e8-9f7a-0242ac130004-7efc5d5a-c57c-11e8-9f7a-0242ac130004'
+                        //'Authorization': 'f1114c1a-c71c-11e8-83ef-0242ac130004-f1114d28-c71c-11e8-83ef-0242ac130004'
                     }
 
                 }).then(function gotData(response) {
@@ -481,6 +504,10 @@ function initialize() {
         }
     }
 
+    // $('#myjpg').click(function() {
+    //     $(.checkbox).trigger('change');
+    //     $('#myjpg').html('blah blah it's clicked now');
+    // });
 
 
     $(".checkbox").change(function () {

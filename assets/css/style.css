@@ -7,21 +7,52 @@ body{
    
 }
 
+#main{
+    height: 98vh;
+    
+}
 #myCarousel{
-    max-height:650px;
+    height:auto;
     width:100vw;
     overflow: hidden;
     position: relative;
     margin-top:3rem;
-    background-color: transparent;
+    background-color: black;
     
+}
+
+
+.checkbox {
+    visibility: hidden;
+  }
+  .checker1 {
+    /* background-image: url();
+    background-position: left center;
+    background-size: auto 100%; */
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+   
+    overflow: contain;
+  }
+  #trigger:checked + .checker {
+    background-position: center;
+  }
+
+
+   
+
+
+#slide1, #slide2, #slide3{
+    vertical-align: top;
 }
 
 .pics{
     min-width: 100vw;
+    opacity: 0.7;
 }
 
-#landing-page{
+#landingPage{
     height: 100vh;
     width:100vw;
     z-index:5;
@@ -67,13 +98,7 @@ header{
     z-index:2;
 }
 
-#main{
-    
-    height: 100vh;
-    width:99vw;
-    /*  */
-       
-}
+
 
 #logo{
     padding:1rem;
@@ -90,6 +115,7 @@ header{
 }
 
 nav li{
+    padding-top:1rem;
     list-style-type: none; 
     z-index: 1;
     background-color: #004777;
@@ -98,7 +124,8 @@ nav li{
 
 
 nav{
-    height: 6rem;
+    
+    height: 7rem;
     text-align: center;
     background-color: #004777;
     color: #FF7700;
