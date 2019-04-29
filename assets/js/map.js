@@ -7,17 +7,51 @@ function initialize() {
 
     
     
-  
+   var cat = [];
     var width =  width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    var iconSrc = {};
+    var icons = {
+        lifeGuard: {
+          icon: "assets/css/image/750px-Flag_of_the_Royal_National_Lifeboat_Institution.svg.png"
+        },
+        lifeBoat: {
+          icon: "assets/css/image/lifeGuard.png"
+        },
+        marina: {
+          icon:"assets/css/image/marina.png"
+        },
+        harbor: {
+            icon: "assets/css/image/harbor.png"
+          },
+          lighthouse: {
+            icon: "assets/css/image/lighthouse.png"
+          },
+          lock: {
+            icon:"assets/css/image/lock.png"
+          },
+          landmark: {
+            icon:"assets/css/image/landmark.png"
+          },
+          inlet: {
+              icon: "assets/css/image/inlet.png"
+            },
+            bridge: {
+              icon: "assets/css/image/bridge.png"
+            },
+            ferry: {
+              icon:"assets/css/image/ferry-red.png"
+            }
+
+      };
+   
     var cardCount = 0;
     var count = -1; //counter for click function that get marine info
     var counter = -1; // counter for function that gets weather info
     var lat = [];
     var lng = [];
 
-    
-
+    var lifeGuardpng = "assets/css/image/750px-Flag_of_the_Royal_National_Lifeboat_Institution.svg.png";
+    const get = (p, o) =>
+    p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
    
 
     // 
@@ -86,8 +120,10 @@ function initialize() {
                     $(window).scrollTop(0);
                     pushCard();
                 });
-                
 
+               
+                
+                
                 
 
 
@@ -100,14 +136,19 @@ function initialize() {
                     },
                     mapTypeId: 'hybrid',
                     mapTypeControl: true,
-
+                   
                 });
+                
 
-                for (i = 0; i < locations.length; i++) {
+                for (i = 0; i < locations.length ; i++) {
 
                     var location = new google.maps.LatLng(locations[i].lat, locations[i].lng);
-
-                    addMarker(map, location);
+                    // console.log( locations[i].cat)
+                   
+                  
+                     iconSrc =  icons[locations[i].cat].icon;
+                    console.log(iconSrc);
+                    addMarker(map, location, iconSrc);
 
 
 
@@ -275,12 +316,13 @@ function initialize() {
                 $('#tideTable tr').children().remove();
             }
 
+           
 
-            function addMarker(map, location) {
+            function addMarker(map, location, iconSrc) {
                 var marker = new google.maps.Marker({
                     position: location,
-                    map: map
-                    
+                    map: map,
+                    icon : iconSrc
                 });
 
                 markers.push(marker);
@@ -324,7 +366,7 @@ function initialize() {
                    
 
 
-                    infoWindow.setContent(label + '<br><a id="weatherButton" class="btn btn-sm btn-primary">Weather Info</a>')
+                    infoWindow.setContent(label + '<br><a id="weatherButton" class="btn btn-sm btn-primary">Weather Info</a>' + cat)
                     infoWindow.open(label, marker);
                   
                   
@@ -385,8 +427,7 @@ function initialize() {
                     //   document.getElementById("wikilink").setAttribute('href', "https://en.wikipedia.org/wiki/" + locations[i].label);
 
                     // helper function for extracting api info
-                    const get = (p, o) =>
-                        p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
+                    
                     htmlString = '';
                     var swellDirections = {};
                     var windDirections = {};
@@ -493,7 +534,9 @@ function initialize() {
             if (locations[i].cat === category) {
                 //  console.log('success!');
                 markers[i].setVisible(true);
-                // console.log(markers[i]);
+                 
+                 
+               
             }
         }
     }
@@ -514,10 +557,10 @@ function initialize() {
         var cat = $(this).attr("value");
         if ($(this).is(":checked", true)) {
             show(cat);
-            console.log(cat);
+          
         } else {
             hide(cat);
-            console.log('hello');
+            
         }
     });
 
